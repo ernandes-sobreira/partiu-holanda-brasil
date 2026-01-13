@@ -3,96 +3,96 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Partiu — Checklist de Viagem</title>
+  <title>Partiu — Checklist + Cartão de Viagem</title>
   <style>
     :root{
       --bg:#f7f8fb;
-      --card:#ffffff;
       --text:#111827;
       --muted:#6b7280;
       --line:#e5e7eb;
-      --brand:#7c3aed;  /* roxinho elegante */
-      --brand2:#f97316; /* laranja leve */
-      --ok:#16a34a;
+      --shadow:0 10px 28px rgba(17,24,39,.08);
+      --r:18px;
+
+      --nl:#2563eb;
+      --br:#16a34a;
+
+      --doc:#7c3aed;
+      --saude:#ef4444;
+      --hig:#0ea5e9;
+      --ele:#f97316;
+      --roup:#a855f7;
+      --bag:#0f766e;
+      --fin:#22c55e;
+      --out:#64748b;
+
       --warn:#f59e0b;
       --bad:#ef4444;
-      --shadow: 0 10px 30px rgba(17,24,39,.08);
-      --radius:18px;
+      --ok:#16a34a;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
-      background: radial-gradient(1200px 600px at 20% 0%, rgba(124,58,237,.08), transparent 55%),
-                  radial-gradient(900px 500px at 95% 15%, rgba(249,115,22,.10), transparent 50%),
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(900px 500px at 15% 0%, rgba(37,99,235,.09), transparent 50%),
+                  radial-gradient(900px 500px at 95% 10%, rgba(249,115,22,.10), transparent 50%),
                   var(--bg);
       color:var(--text);
     }
-    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 60px}
+
     header{
       position:sticky;top:0;z-index:10;
       backdrop-filter: blur(10px);
-      background: rgba(247,248,251,.65);
-      border-bottom:1px solid rgba(229,231,235,.6);
-    }
-    .top{
-      max-width:980px;margin:0 auto;padding:14px 14px;
-      display:flex;gap:12px;align-items:center;justify-content:space-between;
-    }
-    .brand{
-      display:flex;gap:10px;align-items:center;
-    }
-    .logo{
-      width:40px;height:40px;border-radius:14px;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      box-shadow: var(--shadow);
-    }
-    .title{
-      display:flex;flex-direction:column;line-height:1.1
-    }
-    .title b{font-size:16px}
-    .title span{font-size:12px;color:var(--muted)}
-    .person{
-      display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;
-    }
-    .person input{
-      width:min(300px, 62vw);
-      padding:10px 12px;border-radius:14px;border:1px solid var(--line);
-      background:#fff;outline:none;
-    }
-    .pill{
-      padding:9px 12px;border-radius:999px;border:1px solid var(--line);
-      background: rgba(255,255,255,.8);
-      font-size:12px;color:var(--muted);
-    }
-    .bigName{
-      margin-top:14px;
-      font-weight:900;
-      font-size: clamp(26px, 6vw, 44px);
-      letter-spacing:-.02em;
-    }
-    .sub{
-      color:var(--muted);margin-top:6px;font-size:14px
+      background: rgba(247,248,251,.75);
+      border-bottom:1px solid rgba(229,231,235,.7);
     }
 
-    .tabs{
-      margin-top:14px;
-      display:flex;gap:10px;flex-wrap:wrap;
+    .top{
+      max-width:1050px;margin:0 auto;
+      padding:12px 14px;
+      display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
     }
-    .tabBtn{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.85);
-      border-radius:999px;
-      padding:10px 12px;
-      cursor:pointer;
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{
+      width:40px;height:40px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(249,115,22,.95));
+      box-shadow: var(--shadow);
+    }
+    .title{line-height:1.05}
+    .title b{display:block;font-size:15px}
+    .title span{font-size:12px;color:var(--muted)}
+
+    .person{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .pill{
+      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
+      background: rgba(255,255,255,.9);
+      font-size:12px;color:var(--muted);
+    }
+    input[type="text"], input[type="datetime-local"], input[type="time"]{
+      padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;outline:none;
+    }
+
+    .wrap{max-width:1050px;margin:0 auto;padding:16px 14px 60px}
+    .bigName{
+      font-weight:900;
+      font-size: clamp(26px, 5.6vw, 42px);
+      letter-spacing:-.02em;
+      margin-top:8px;
+    }
+    .sub{color:var(--muted);margin-top:6px;font-size:14px}
+
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .tab{
+      padding:10px 12px;border-radius:999px;border:1px solid var(--line);
+      background: rgba(255,255,255,.9);
+      cursor:pointer;user-select:none;
       display:flex;gap:8px;align-items:center;
-      transition:.15s transform, .15s background, .15s border;
-      user-select:none;
+      transition:.12s transform, .12s background, .12s border;
     }
-    .tabBtn:hover{transform: translateY(-1px)}
-    .tabBtn.active{
-      background: linear-gradient(135deg, rgba(124,58,237,.14), rgba(249,115,22,.12));
-      border-color: rgba(124,58,237,.35);
+    .tab:hover{transform:translateY(-1px)}
+    .tab.active{
+      border-color: rgba(37,99,235,.35);
+      background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(249,115,22,.08));
     }
 
     .grid{
@@ -101,211 +101,185 @@
       grid-template-columns: 1.15fr .85fr;
       gap:14px;
     }
-    @media (max-width: 860px){
-      .grid{grid-template-columns:1fr}
-    }
+    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
+
     .card{
       background: rgba(255,255,255,.92);
       border:1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius: var(--r);
       box-shadow: var(--shadow);
       padding:14px;
     }
     .card h3{
       margin:0 0 10px;
-      font-size:14px;
+      font-size:13px;
       letter-spacing:.02em;
       text-transform:uppercase;
       color:#374151;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:10px;
     }
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .btn{
-      border:none;border-radius:14px;
-      padding:10px 12px;
-      cursor:pointer;
-      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(249,115,22,.95));
-      color:#fff;
-      box-shadow: 0 10px 18px rgba(124,58,237,.18);
-      transition:.15s transform;
-      font-weight:700;
-    }
-    .btn:hover{transform: translateY(-1px)}
-    .btn.ghost{
-      background:#fff;color:var(--text);
+
+    .badge{
+      font-size:11px;color:var(--muted);
       border:1px solid var(--line);
-      box-shadow:none;
-      font-weight:600;
+      background:#fff;
+      padding:4px 8px;border-radius:999px;
+      white-space:nowrap;
     }
-    .btn.danger{
-      background: rgba(239,68,68,.92);
-      box-shadow: 0 10px 18px rgba(239,68,68,.18);
-    }
-    .btn.small{padding:8px 10px;border-radius:12px;font-weight:700;font-size:12px}
 
-    .progress{
+    .alert{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px;border-radius:16px;border:1px solid var(--line);
+      background:#fff;
+    }
+    .alert .dot{width:10px;height:10px;border-radius:999px;margin-top:5px;background:var(--warn)}
+    .alert.ok .dot{background:var(--ok)}
+    .alert.bad .dot{background:var(--bad)}
+    .alert b{display:block}
+    .alert small{color:var(--muted);display:block;margin-top:2px;line-height:1.35}
+
+    .progressRow{
+      margin-top:10px;
       display:flex;gap:10px;align-items:center;justify-content:space-between;
-      margin-top:10px;
-      padding:10px 12px;border:1px solid var(--line);
-      background:#fff;border-radius:14px;
+      padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;
     }
-    .bar{
-      height:10px;border-radius:999px;background:#eef2ff;overflow:hidden;flex:1;
-      border:1px solid rgba(229,231,235,.9);
-    }
-    .fill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, var(--brand), var(--brand2));
-      border-radius:999px;
-    }
-    .pct{min-width:70px;text-align:right;color:var(--muted);font-size:12px}
+    .bar{height:10px;border-radius:999px;background:#eef2ff;overflow:hidden;flex:1;border:1px solid rgba(229,231,235,.95)}
+    .fill{height:100%;width:0%;background: linear-gradient(90deg, rgba(124,58,237,.95), rgba(249,115,22,.95))}
+    .pct{min-width:82px;text-align:right;color:var(--muted);font-size:12px}
 
-    .list{
-      margin-top:10px;
-      display:flex;flex-direction:column;gap:8px;
+    .btn{
+      border:none;border-radius:14px;padding:10px 12px;cursor:pointer;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(249,115,22,.95));
+      color:#fff;font-weight:800;box-shadow:0 10px 18px rgba(124,58,237,.18);
     }
+    .btn.ghost{background:#fff;color:var(--text);border:1px solid var(--line);box-shadow:none;font-weight:700}
+    .btn.danger{background: rgba(239,68,68,.92); box-shadow:0 10px 18px rgba(239,68,68,.18)}
+    .btn.small{padding:8px 10px;border-radius:12px;font-size:12px}
+
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+    .cats{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width: 740px){ .cats{grid-template-columns:1fr} }
+
+    .catCard{
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:#fff;
+      overflow:hidden;
+    }
+    .catHead{
+      padding:12px 12px 10px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      color:#fff;
+    }
+    .catHead b{font-size:14px}
+    .catHead .count{font-size:12px;opacity:.95}
+    .catBody{padding:10px 12px 12px}
+
+    .list{display:flex;flex-direction:column;gap:8px}
     .item{
       display:flex;gap:10px;align-items:flex-start;
-      padding:10px 10px;
-      border:1px solid var(--line);
-      background:#fff;border-radius:14px;
+      padding:10px;border:1px solid var(--line);
+      border-radius:14px;background:#fff;
     }
-    .item input[type="checkbox"]{margin-top:3px;transform: scale(1.15)}
+    .item input{margin-top:3px;transform:scale(1.15)}
     .item .meta{flex:1}
     .item .meta b{display:block;font-size:14px}
-    .item .meta small{color:var(--muted)}
-    .item .actions{display:flex;gap:6px;align-items:center}
-    .tag{
-      display:inline-flex;align-items:center;gap:6px;
-      font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);
-      color:var(--muted);background: rgba(249,250,251,.9);
-      margin-top:6px;
-    }
-
-    .addBox{
+    .item .meta small{color:var(--muted);display:block;margin-top:2px}
+    .item .actions{display:flex;gap:6px}
+    .addMini{
       margin-top:10px;
       display:grid;
-      grid-template-columns: 1fr 1fr auto;
+      grid-template-columns: 1fr auto;
       gap:8px;
     }
-    @media (max-width: 520px){
-      .addBox{grid-template-columns: 1fr}
-    }
-    .addBox input, .addBox select{
-      padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;outline:none;
-    }
+    .addMini input{width:100%}
 
-    .tips{
-      display:flex;flex-direction:column;gap:10px;
+    textarea{
+      width:100%;
+      min-height:120px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      outline:none;
+      resize:vertical;
+      font-family: inherit;
     }
-    .tip{
-      background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;
-    }
-    .tip b{display:block;margin-bottom:6px}
-    .tip ul{margin:8px 0 0 18px;color:#374151}
-    .tip li{margin:6px 0}
+    .linkList a{color:#2563eb;text-decoration:none;font-weight:800}
+    .linkList a:hover{text-decoration:underline}
     .muted{color:var(--muted)}
-    .footNote{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.35}
     .hr{height:1px;background:var(--line);margin:12px 0}
 
-    /* uploader */
-    .uploader{
-      border:1px dashed rgba(124,58,237,.35);
-      background: rgba(124,58,237,.06);
-      padding:12px;border-radius:14px;
-    }
-    .files{
-      margin-top:10px;display:flex;flex-direction:column;gap:8px;
-    }
-    .fileRow{
-      display:flex;gap:10px;align-items:center;justify-content:space-between;
-      padding:10px 10px;border:1px solid var(--line);background:#fff;border-radius:14px;
-    }
-    .fileRow .left{display:flex;gap:10px;align-items:center;min-width:0}
-    .thumb{
-      width:44px;height:44px;border-radius:12px;border:1px solid var(--line);
-      background:#f9fafb;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;
-    }
-    .thumb img{width:100%;height:100%;object-fit:cover}
-    .fname{
-      min-width:0;
-    }
-    .fname b{
-      display:block;
-      max-width: 380px;
-      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-      font-size:13px;
-    }
-    .fname small{color:var(--muted)}
-    a.link{color:var(--brand);text-decoration:none;font-weight:700}
-    a.link:hover{text-decoration:underline}
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono";
-      font-size:11px;
-      padding:2px 6px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--muted);
-    }
+    /* confetti canvas */
+    #fx{position:fixed;inset:0;pointer-events:none;z-index:999;display:none}
   </style>
 </head>
 <body>
+<canvas id="fx"></canvas>
+
 <header>
   <div class="top">
     <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
+      <div class="logo"></div>
       <div class="title">
-        <b>Partiu — Checklist de Viagem</b>
-        <span>offline • localStorage • simples e bonito</span>
+        <b>Partiu — Checklist + Cartão de Viagem</b>
+        <span>leve • localStorage • prático</span>
       </div>
     </div>
-
     <div class="person">
       <span class="pill">Nome:</span>
-      <input id="personName" placeholder="Digite seu nome (ex.: Ernandes)" />
+      <input id="name" type="text" placeholder="Ex.: Ernandes" />
     </div>
   </div>
 </header>
 
 <div class="wrap">
   <div class="bigName" id="bigName">Seu checklist</div>
-  <div class="sub" id="subtitle">Dois modos: <b>Holanda</b> e <b>Brasil</b>. Tudo fica salvo no seu aparelho.</div>
+  <div class="sub">Tudo salva neste aparelho. Duas abas: Holanda e Brasil.</div>
 
   <div class="tabs">
-    <div class="tabBtn active" data-tab="nl">🇳🇱 Partiu Holanda</div>
-    <div class="tabBtn" data-tab="br">🇧🇷 Partiu Brasil</div>
+    <div class="tab active" data-tab="nl">🇳🇱 Partiu Holanda</div>
+    <div class="tab" data-tab="br">🇧🇷 Partiu Brasil</div>
   </div>
 
   <div class="grid">
-    <!-- LEFT: Checklist -->
+    <!-- LEFT -->
     <section class="card">
-      <h3>Checklist</h3>
+      <h3>
+        Painel rápido
+        <span class="badge" id="lastSaved">—</span>
+      </h3>
 
-      <div class="row">
-        <button class="btn small ghost" id="btnLoadDefault">Recarregar checklist padrão</button>
-        <button class="btn small ghost" id="btnClearChecks">Desmarcar tudo</button>
-        <button class="btn small danger" id="btnResetAll">Resetar aba atual</button>
+      <div class="alert" id="countdownBox">
+        <div class="dot"></div>
+        <div>
+          <b id="countdownTitle">Defina a data/hora da viagem</b>
+          <small id="countdownText">Você vai ver a contagem regressiva aqui (e alerta quando estiver perto).</small>
+        </div>
       </div>
 
-      <div class="progress" title="Progresso do checklist">
+      <div class="progressRow" title="Progresso do checklist da aba">
         <div class="bar"><div class="fill" id="fill"></div></div>
         <div class="pct" id="pct">0%</div>
       </div>
 
-      <div class="addBox">
-        <input id="newText" placeholder="Adicionar item (ex.: Adaptador de tomada)" />
-        <select id="newCat">
-          <option value="Documentos">Documentos</option>
-          <option value="Financeiro">Financeiro</option>
-          <option value="Saúde">Saúde</option>
-          <option value="Roupas">Roupas</option>
-          <option value="Eletrônicos">Eletrônicos</option>
-          <option value="Bagagem">Bagagem</option>
-          <option value="Casa">Casa</option>
-          <option value="Trabalho">Trabalho</option>
-          <option value="Outros">Outros</option>
-        </select>
-        <button class="btn" id="btnAdd">Adicionar</button>
+      <div class="row" style="margin-top:10px">
+        <button class="btn small ghost" id="btnDefault">Recarregar itens padrão</button>
+        <button class="btn small ghost" id="btnUncheck">Desmarcar tudo</button>
+        <button class="btn small danger" id="btnResetTab">Resetar aba</button>
       </div>
 
-      <div class="list" id="list"></div>
+      <div class="hr"></div>
+
+      <h3>Checklist por categoria <span class="badge" id="itemsCount">0 itens</span></h3>
+      <div class="cats" id="cats"></div>
 
       <div class="hr"></div>
 
@@ -314,584 +288,672 @@
         <label class="btn ghost" for="importFile" style="cursor:pointer;">Importar backup</label>
         <input id="importFile" type="file" accept="application/json" style="display:none;">
       </div>
-
-      <div class="footNote">
-        Dica: este app usa <span class="kbd">localStorage</span>. Se você limpar dados do navegador, perde tudo — use “Exportar backup”.
+      <div class="muted" style="font-size:12px;margin-top:10px;line-height:1.35">
+        Dica: se limpar dados do navegador, perde tudo. Use exportar backup.
       </div>
     </section>
 
-    <!-- RIGHT: Upload + Tips -->
+    <!-- RIGHT -->
     <aside class="card">
-      <h3>Arquivos & Fotos (localStorage)</h3>
+      <h3>Cartão da Viagem <span class="badge" id="tabLabel">Holanda</span></h3>
 
-      <div class="uploader">
-        <div class="muted" style="font-size:13px;">
-          Faça upload de <b>documentos, fotos e comprovantes</b>. Fica tudo <b>só neste aparelho</b>.
-          <br/>Sugestão: foto do passaporte, reservas, seguro, tickets.
-        </div>
-        <div class="row" style="margin-top:10px;">
-          <input id="filePick" type="file" multiple accept="image/*,.pdf,.txt,.json,.csv,.doc,.docx,.xls,.xlsx" />
-        </div>
-        <div class="footNote">
-          Para economizar espaço: prefira imagens. PDFs grandes podem estourar o limite do navegador.
-        </div>
+      <div class="row">
+        <input id="tripDate" type="datetime-local" />
+        <input id="tripTime" type="time" title="Hora extra (opcional)" style="display:none"/>
       </div>
 
-      <div class="files" id="files"></div>
+      <div class="row" style="margin-top:8px">
+        <input id="from" type="text" placeholder="Saída (aeroporto/cidade) — ex: GRU" style="flex:1" />
+        <input id="to" type="text" placeholder="Chegada (aeroporto/cidade) — ex: AMS" style="flex:1" />
+      </div>
+
+      <div class="row" style="margin-top:8px">
+        <input id="flight" type="text" placeholder="Voo — ex: KL792" style="flex:1" />
+        <input id="gate" type="text" placeholder="Portão — ex: B12" style="flex:1" />
+      </div>
+
+      <div class="row" style="margin-top:8px">
+        <input id="connectCity" type="text" placeholder="Conexão (se tiver) — ex: Lisboa" style="flex:1" />
+        <input id="connectGate" type="text" placeholder="Portão da conexão — ex: C3" style="flex:1" />
+      </div>
+
+      <div class="row" style="margin-top:8px">
+        <input id="baggage" type="text" placeholder="Bagagem: despacho? peso? (ex: 1x23kg + 1 mochila)" style="flex:1" />
+      </div>
+
+      <textarea id="tripNotes" placeholder="Notas rápidas: horário de check-in, onde trocar de voo, o que fazer ao chegar, endereço do hotel, contatos, etc."></textarea>
+
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="btnSaveTrip">Salvar cartão</button>
+        <button class="btn ghost" id="btnClearTrip">Limpar</button>
+      </div>
 
       <div class="hr"></div>
 
-      <h3 id="tipsTitle">Guia rápido — Holanda</h3>
-      <div class="tips" id="tips"></div>
+      <h3>Lugares/Links (clicáveis)</h3>
+      <div class="muted" style="font-size:12px;margin-top:-6px;margin-bottom:8px">
+        Você pode editar e adicionar links nas Notas & Links abaixo também.
+      </div>
+      <div class="linkList" id="places"></div>
 
-      <div class="footNote" id="legalNote">
-        Este guia é prático (não substitui regras oficiais). Para entrada em país, sempre confira requisitos do governo/companhia aérea.
+      <div class="hr"></div>
+
+      <h3>Notas & Links</h3>
+      <textarea id="notes" placeholder="Cole links aqui (reservas, seguro, mapa, museus), ou escreva lembretes."></textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="btn ghost" id="btnSaveNotes">Salvar notas</button>
+        <button class="btn ghost" id="btnClearNotes">Limpar notas</button>
       </div>
     </aside>
   </div>
 </div>
 
 <script>
-/* =========================
-   Storage keys + state
-========================= */
-const APP_KEY = "partiu_checklist_v1";
-const FILE_KEY = "partiu_files_v1";
-const NAME_KEY = "partiu_name_v1";
-
-const tabs = {
-  nl: { label: "Holanda", emoji: "🇳🇱" },
-  br: { label: "Brasil", emoji: "🇧🇷" }
+/* ======================
+   Storage
+====================== */
+const K = {
+  name: "partiu_name_v2",
+  state: "partiu_state_v2",
+  trip: "partiu_trip_v2",
+  notes: "partiu_notes_v2",
+  savedAt: "partiu_savedAt_v2"
 };
 
 let activeTab = "nl";
 
-/* =========================
-   Default checklists
-========================= */
-const defaultLists = {
+const CATS = [
+  {key:"Documentos", color:"var(--doc)"},
+  {key:"Saúde", color:"var(--saude)"},
+  {key:"Higiene", color:"var(--hig)"},
+  {key:"Eletrônicos", color:"var(--ele)"},
+  {key:"Roupas", color:"var(--roup)"},
+  {key:"Bagagem", color:"var(--bag)"},
+  {key:"Financeiro", color:"var(--fin)"},
+  {key:"Outros", color:"var(--out)"}
+];
+
+const DEFAULT = {
   nl: [
     // Documentos
-    {text:"Passaporte válido (ideal: +3 meses após saída)", cat:"Documentos"},
-    {text:"Passagens / comprovante de retorno", cat:"Documentos"},
-    {text:"Reserva de hospedagem (ou carta-convite)", cat:"Documentos"},
-    {text:"Seguro-viagem (Schengen: cobertura médica alta)", cat:"Documentos"},
-    {text:"Comprovantes financeiros (cartão/limite/extrato)", cat:"Documentos"},
-    {text:"CNH (se pretende dirigir) + Permissão Internacional (se quiser garantir)", cat:"Documentos"},
-    // Financeiro
-    {text:"Cartão internacional habilitado + aviso ao banco", cat:"Financeiro"},
-    {text:"Euro em espécie (pouco) + carteira/porta-cartões", cat:"Financeiro"},
+    ["Passaporte válido (ideal: +3 meses após saída)", "Documentos"],
+    ["Passagens/itinerário (PDF ou print)", "Documentos"],
+    ["Reserva de hospedagem (ou carta-convite)", "Documentos"],
+    ["Seguro-viagem (Schengen: cobertura alta)", "Documentos"],
+    ["Comprovantes financeiros (cartão/limite/extrato)", "Documentos"],
+    ["Cópia do passaporte (foto no celular + aqui nas notas)", "Documentos"],
+
     // Saúde
-    {text:"Remédios de uso contínuo + receita", cat:"Saúde"},
-    {text:"Kit básico: analgésico, antialérgico, curativo", cat:"Saúde"},
+    ["Remédio pra dor de cabeça (ex.: paracetamol/ibuprofeno)", "Saúde"],
+    ["Remédio para alergia (se você usa)", "Saúde"],
+    ["Band-aid/curativo + pomadinha simples", "Saúde"],
+    ["Remédios de uso contínuo + receita", "Saúde"],
+
+    // Higiene
+    ["Escova de dente", "Higiene"],
+    ["Pasta de dente", "Higiene"],
+    ["Fio dental", "Higiene"],
+    ["Lenço umedecido", "Higiene"],
+    ["Álcool em gel (pequeno)", "Higiene"],
+    ["Sabonete em sachê / mini", "Higiene"],
+    ["Desodorante", "Higiene"],
+
     // Eletrônicos
-    {text:"Adaptador de tomada (padrão europeu tipo C/F)", cat:"Eletrônicos"},
-    {text:"Carregador + cabo extra + power bank", cat:"Eletrônicos"},
-    {text:"Chip internacional / eSIM configurado", cat:"Eletrônicos"},
+    ["Carregador do celular", "Eletrônicos"],
+    ["Cabo extra (reserva)", "Eletrônicos"],
+    ["Power bank carregado", "Eletrônicos"],
+    ["Adaptador de tomada (padrão europeu)", "Eletrônicos"],
+    ["Fone de ouvido", "Eletrônicos"],
+
     // Roupas
-    {text:"Casaco corta-vento/chuva (Holanda venta e chove)", cat:"Roupas"},
-    {text:"Tênis confortável (muita caminhada)", cat:"Roupas"},
-    {text:"Camadas: segunda pele / moletom / jaqueta", cat:"Roupas"},
+    ["Casaco corta-vento/chuva (Holanda venta e chove)", "Roupas"],
+    ["Tênis confortável (muita caminhada)", "Roupas"],
+    ["Meias extras", "Roupas"],
+
     // Bagagem
-    {text:"Cadeado TSA + tag de identificação", cat:"Bagagem"},
-    {text:"Organizadores (sacos/packing cubes)", cat:"Bagagem"},
+    ["Etiqueta de mala (nome/contato)", "Bagagem"],
+    ["Cadeado", "Bagagem"],
+    ["Mochila de mão organizada", "Bagagem"],
+
+    // Financeiro
+    ["Cartão internacional habilitado + aviso ao banco", "Financeiro"],
+    ["Euro em espécie (pouco) — só por segurança", "Financeiro"],
+
     // Outros
-    {text:"Roteiro básico: Amsterdã, museus, canais, bate-voltas", cat:"Outros"},
-    {text:"Apps úteis: mapas offline + transporte público", cat:"Outros"}
+    ["Garrafa de água vazia (encher após segurança)", "Outros"],
+    ["Lanchinho prático para o aeroporto", "Outros"],
+    ["Checar clima 24h antes", "Outros"]
   ],
   br: [
-    // Documentos
-    {text:"Documento com foto (RG em bom estado ou CNH)", cat:"Documentos"},
-    {text:"Passagens / comprovantes de hospedagem", cat:"Documentos"},
-    {text:"Cartão do SUS/Plano de saúde (se tiver)", cat:"Documentos"},
-    // Financeiro
-    {text:"Cartões + um pouco de dinheiro em espécie", cat:"Financeiro"},
-    // Saúde
-    {text:"Repelente + protetor solar", cat:"Saúde"},
-    {text:"Remédios de uso contínuo + receita", cat:"Saúde"},
-    // Eletrônicos
-    {text:"Carregadores + power bank", cat:"Eletrônicos"},
-    // Roupas
-    {text:"Roupas adequadas ao clima do destino (chuva/calor/frio)", cat:"Roupas"},
-    {text:"Calçado confortável", cat:"Roupas"},
-    // Bagagem
-    {text:"Cadeado + identificação na mala", cat:"Bagagem"},
-    // Casa
-    {text:"Fechar gás/água, desligar eletrônicos, lixo fora", cat:"Casa"},
-    // Outros
-    {text:"Roteiro e contatos de emergência", cat:"Outros"}
+    ["Documento com foto (RG bom ou CNH)", "Documentos"],
+    ["Passagens/itinerário (print)", "Documentos"],
+    ["Reserva/endereços importantes", "Documentos"],
+
+    ["Remédio pra dor de cabeça", "Saúde"],
+    ["Remédios de uso contínuo + receita", "Saúde"],
+    ["Protetor solar", "Saúde"],
+    ["Repelente", "Saúde"],
+
+    ["Escova de dente", "Higiene"],
+    ["Pasta de dente", "Higiene"],
+    ["Lenço umedecido", "Higiene"],
+    ["Álcool em gel", "Higiene"],
+
+    ["Carregador do celular", "Eletrônicos"],
+    ["Power bank", "Eletrônicos"],
+
+    ["Roupas adequadas ao clima", "Roupas"],
+    ["Calçado confortável", "Roupas"],
+
+    ["Etiqueta/cadeado de mala", "Bagagem"],
+    ["Mochila de mão organizada", "Bagagem"],
+
+    ["Cartões + dinheiro em espécie", "Financeiro"],
+
+    ["Fechar gás/água, lixo fora, avisar alguém", "Outros"]
   ]
 };
 
-const tipsContent = {
+const PLACES = {
   nl: [
-    {
-      title: "O que fazer na Holanda (ideias rápidas)",
-      items: [
-        "Amsterdã: canais, Rijksmuseum, Van Gogh Museum, Casa de Anne Frank (reserve com antecedência).",
-        "Bate-volta: Zaanse Schans (moinhos), Haarlem, Utrecht, Rotterdam.",
-        "Keukenhof (primavera) e campos de tulipas (sazonal).",
-        "Ciclismo: alugue bike com cuidado (faixas e regras são rígidas)."
-      ]
-    },
-    {
-      title: "Clima e estilo (pra não sofrer)",
-      items: [
-        "Vento + chuva são comuns: leve jaqueta impermeável/corta-vento.",
-        "Use camadas (segunda pele + moletom + jaqueta).",
-        "Tênis confortável: você vai andar muito."
-      ]
-    },
-    {
-      title: "Transporte & vida prática",
-      items: [
-        "Transporte público funciona muito bem (trens/metro/ônibus).",
-        "Cartões/contato (contactless) são super usados; leve um pouco de euro só por garantia.",
-        "Horários: algumas lojas fecham cedo fora de grandes áreas turísticas."
-      ]
-    },
-    {
-      title: "Checklist “documental” inteligente",
-      items: [
-        "Tenha cópia digital (foto) de passaporte, reservas e seguro aqui no app.",
-        "Se for cruzar fronteiras Schengen, mantenha reservas e retorno fáceis de mostrar.",
-        "Se dirigir: verifique regras/locadora e considere Permissão Internacional."
-      ]
-    }
+    {t:"Anne Frank House (reservar)", u:"https://www.annefrank.org/"},
+    {t:"Rijksmuseum", u:"https://www.rijksmuseum.nl/"},
+    {t:"Van Gogh Museum", u:"https://www.vangoghmuseum.nl/"},
+    {t:"I amsterdam (dicas/agenda)", u:"https://www.iamsterdam.com/"},
+    {t:"NS (trens)", u:"https://www.ns.nl/en"},
   ],
   br: [
-    {
-      title: "O que fazer no Brasil (modelo adaptável)",
-      items: [
-        "Monte o roteiro por cidade/bairro e salve comprovantes aqui.",
-        "Pense no clima local (chuvas, calor, serra/frio).",
-        "Se for interior: considere sinal fraco — baixe mapas offline."
-      ]
-    },
-    {
-      title: "Segurança e praticidade",
-      items: [
-        "Leve só o essencial na rua; use doleira/porta-cartões se achar melhor.",
-        "Tenha contatos de emergência e endereço da hospedagem anotados.",
-        "Repelente/protetor solar ajudam muito dependendo do destino."
-      ]
-    }
+    {t:"Google Maps", u:"https://maps.google.com/"},
+    {t:"Previsão do tempo (geral)", u:"https://www.windy.com/"},
   ]
 };
 
-/* =========================
-   Helpers
-========================= */
+function nowISO(){ return new Date().toISOString(); }
+function saveTS(){ localStorage.setItem(K.savedAt, nowISO()); renderSavedAt(); }
+
 function loadState(){
-  const raw = localStorage.getItem(APP_KEY);
-  return raw ? JSON.parse(raw) : { nl: null, br: null };
+  const raw = localStorage.getItem(K.state);
+  if(!raw) return { nl:null, br:null };
+  try{ return JSON.parse(raw); }catch{ return { nl:null, br:null }; }
 }
-function saveState(state){
-  localStorage.setItem(APP_KEY, JSON.stringify(state));
-}
-function getTabList(state, tab){
-  if(!state[tab]) state[tab] = defaultLists[tab].map(x => ({...x, done:false, id: crypto.randomUUID()}));
-  return state[tab];
-}
-function setTabList(state, tab, list){
-  state[tab] = list;
-  saveState(state);
-}
-function byCatOrder(a,b){
-  const order = ["Documentos","Financeiro","Saúde","Eletrônicos","Roupas","Bagagem","Casa","Trabalho","Outros"];
-  return (order.indexOf(a.cat) - order.indexOf(b.cat)) || a.text.localeCompare(b.text);
+function saveState(st){ localStorage.setItem(K.state, JSON.stringify(st)); saveTS(); }
+
+function ensureList(st, tab){
+  if(!st[tab]){
+    st[tab] = DEFAULT[tab].map(([text,cat])=>({id:crypto.randomUUID(), text, cat, done:false}));
+    saveState(st);
+  }
+  return st[tab];
 }
 
-/* =========================
-   UI render
-========================= */
-const listEl = document.getElementById("list");
-const fillEl = document.getElementById("fill");
-const pctEl  = document.getElementById("pct");
-const tipsEl = document.getElementById("tips");
-const tipsTitleEl = document.getElementById("tipsTitle");
+function loadTrip(){
+  const raw = localStorage.getItem(K.trip);
+  if(!raw) return { nl:{}, br:{} };
+  try{
+    const o = JSON.parse(raw);
+    return { nl:o.nl||{}, br:o.br||{} };
+  }catch{ return { nl:{}, br:{} }; }
+}
+function saveTrip(o){ localStorage.setItem(K.trip, JSON.stringify(o)); saveTS(); }
 
-function render(){
-  const state = loadState();
-  const list = getTabList(state, activeTab).slice().sort(byCatOrder);
+function loadNotes(){
+  const raw = localStorage.getItem(K.notes);
+  if(!raw) return { nl:"", br:"" };
+  try{
+    const o = JSON.parse(raw);
+    return { nl:o.nl||"", br:o.br||"" };
+  }catch{ return { nl:"", br:"" }; }
+}
+function saveNotes(o){ localStorage.setItem(K.notes, JSON.stringify(o)); saveTS(); }
 
-  // checklist
-  listEl.innerHTML = "";
-  list.forEach(item => {
-    const el = document.createElement("div");
-    el.className = "item";
+function esc(s){ return (s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"); }
 
-    el.innerHTML = `
-      <input type="checkbox" ${item.done ? "checked":""} aria-label="Concluir item" />
-      <div class="meta">
-        <b>${escapeHtml(item.text)}</b>
-        <div class="tag">${escapeHtml(item.cat)}</div>
-      </div>
-      <div class="actions">
-        <button class="btn small ghost" title="Editar">✏️</button>
-        <button class="btn small danger" title="Excluir">🗑️</button>
-      </div>
-    `;
-    const cb = el.querySelector("input[type=checkbox]");
-    const btnEdit = el.querySelectorAll("button")[0];
-    const btnDel  = el.querySelectorAll("button")[1];
+/* ======================
+   UI: name + tabs
+====================== */
+const nameEl = document.getElementById("name");
+const bigNameEl = document.getElementById("bigName");
+nameEl.value = localStorage.getItem(K.name) || "";
+function applyName(){
+  const n = nameEl.value.trim();
+  localStorage.setItem(K.name, n);
+  bigNameEl.textContent = n ? `${n} — seu checklist` : "Seu checklist";
+}
+nameEl.addEventListener("input", applyName);
+applyName();
 
-    cb.addEventListener("change", () => {
-      const st = loadState();
-      const arr = getTabList(st, activeTab);
-      const idx = arr.findIndex(x => x.id === item.id);
-      if(idx >= 0){ arr[idx].done = cb.checked; setTabList(st, activeTab, arr); }
-      render();
-    });
-
-    btnEdit.addEventListener("click", () => {
-      const newText = prompt("Editar item:", item.text);
-      if(newText === null) return;
-      const newCat = prompt("Editar categoria (ex.: Documentos, Roupas...):", item.cat) || item.cat;
-
-      const st = loadState();
-      const arr = getTabList(st, activeTab);
-      const idx = arr.findIndex(x => x.id === item.id);
-      if(idx >= 0){
-        arr[idx].text = newText.trim() || arr[idx].text;
-        arr[idx].cat = newCat.trim() || arr[idx].cat;
-        setTabList(st, activeTab, arr);
-      }
-      render();
-    });
-
-    btnDel.addEventListener("click", () => {
-      if(!confirm("Excluir este item?")) return;
-      const st = loadState();
-      const arr = getTabList(st, activeTab).filter(x => x.id !== item.id);
-      setTabList(st, activeTab, arr);
-      render();
-    });
-
-    listEl.appendChild(el);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");
+    activeTab = t.dataset.tab;
+    document.getElementById("tabLabel").textContent = activeTab==="nl" ? "Holanda" : "Brasil";
+    renderAll();
   });
+});
 
-  // progress
+/* ======================
+   Render checklist in category cards
+====================== */
+const catsEl = document.getElementById("cats");
+const fillEl = document.getElementById("fill");
+const pctEl = document.getElementById("pct");
+const itemsCountEl = document.getElementById("itemsCount");
+
+function renderChecklist(){
+  const st = loadState();
+  const list = ensureList(st, activeTab);
+
+  // counts + progress
   const total = list.length || 1;
-  const done = list.filter(x => x.done).length;
+  const done = list.filter(x=>x.done).length;
   const pct = Math.round((done/total)*100);
   fillEl.style.width = pct + "%";
   pctEl.textContent = `${pct}% (${done}/${list.length})`;
+  itemsCountEl.textContent = `${list.length} itens`;
 
-  // tips
-  tipsTitleEl.textContent = `Guia rápido — ${tabs[activeTab].label}`;
-  tipsEl.innerHTML = "";
-  (tipsContent[activeTab] || []).forEach(block => {
-    const t = document.createElement("div");
-    t.className = "tip";
-    t.innerHTML = `<b>${escapeHtml(block.title)}</b><ul>${block.items.map(li => `<li>${escapeHtml(li)}</li>`).join("")}</ul>`;
-    tipsEl.appendChild(t);
+  // Confetti when 100%
+  if(list.length>0 && done===list.length) confetti();
+
+  // group by category
+  const map = {};
+  CATS.forEach(c=>map[c.key]=[]);
+  list.forEach(it=>{
+    if(!map[it.cat]) map[it.cat]=[];
+    map[it.cat].push(it);
   });
 
-  // files
-  renderFiles();
-}
+  catsEl.innerHTML = "";
+  CATS.forEach(cat=>{
+    const arr = map[cat.key] || [];
+    const d = arr.filter(x=>x.done).length;
+    const card = document.createElement("div");
+    card.className = "catCard";
 
-function escapeHtml(str){
-  return (str||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
-}
+    const head = document.createElement("div");
+    head.className = "catHead";
+    head.style.background = `linear-gradient(135deg, ${cat.color}, rgba(17,24,39,.85))`;
+    head.innerHTML = `<b>${esc(cat.key)}</b><div class="count">${d}/${arr.length}</div>`;
 
-/* =========================
-   Tabs
-========================= */
-document.querySelectorAll(".tabBtn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tabBtn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    activeTab = btn.dataset.tab;
-    render();
+    const body = document.createElement("div");
+    body.className = "catBody";
+
+    const listBox = document.createElement("div");
+    listBox.className = "list";
+
+    arr.forEach(item=>{
+      const row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML = `
+        <input type="checkbox" ${item.done?"checked":""}/>
+        <div class="meta">
+          <b>${esc(item.text)}</b>
+        </div>
+        <div class="actions">
+          <button class="btn small ghost" title="Editar">✏️</button>
+          <button class="btn small danger" title="Excluir">🗑️</button>
+        </div>
+      `;
+
+      const cb = row.querySelector('input[type="checkbox"]');
+      const btnE = row.querySelectorAll("button")[0];
+      const btnD = row.querySelectorAll("button")[1];
+
+      cb.addEventListener("change", ()=>{
+        const s = loadState();
+        const a = ensureList(s, activeTab);
+        const idx = a.findIndex(x=>x.id===item.id);
+        if(idx>=0){ a[idx].done = cb.checked; saveState(s); }
+        renderAll();
+      });
+
+      btnE.addEventListener("click", ()=>{
+        const nt = prompt("Editar item:", item.text);
+        if(nt===null) return;
+        const s = loadState();
+        const a = ensureList(s, activeTab);
+        const idx = a.findIndex(x=>x.id===item.id);
+        if(idx>=0){ a[idx].text = (nt.trim()||a[idx].text); saveState(s); }
+        renderAll();
+      });
+
+      btnD.addEventListener("click", ()=>{
+        if(!confirm("Excluir este item?")) return;
+        const s = loadState();
+        s[activeTab] = ensureList(s, activeTab).filter(x=>x.id!==item.id);
+        saveState(s);
+        renderAll();
+      });
+
+      listBox.appendChild(row);
+    });
+
+    // add mini
+    const add = document.createElement("div");
+    add.className = "addMini";
+    add.innerHTML = `
+      <input type="text" placeholder="Adicionar em ${esc(cat.key)} (ex.: lenço umedecido)" />
+      <button class="btn small">Adicionar</button>
+    `;
+    const inp = add.querySelector("input");
+    const btn = add.querySelector("button");
+    btn.addEventListener("click", ()=>{
+      const txt = inp.value.trim();
+      if(!txt) return;
+      const s = loadState();
+      const a = ensureList(s, activeTab);
+      a.push({id:crypto.randomUUID(), text:txt, cat:cat.key, done:false});
+      saveState(s);
+      inp.value="";
+      renderAll();
+    });
+
+    body.appendChild(listBox);
+    body.appendChild(add);
+
+    card.appendChild(head);
+    card.appendChild(body);
+    catsEl.appendChild(card);
   });
-});
-
-/* =========================
-   Name
-========================= */
-const nameInput = document.getElementById("personName");
-const bigNameEl = document.getElementById("bigName");
-
-function applyName(){
-  const name = (nameInput.value || "").trim();
-  localStorage.setItem(NAME_KEY, name);
-  bigNameEl.textContent = name ? `${name} — seu checklist` : "Seu checklist";
 }
-nameInput.value = localStorage.getItem(NAME_KEY) || "";
-nameInput.addEventListener("input", applyName);
-applyName();
 
-/* =========================
-   Checklist actions
-========================= */
-document.getElementById("btnAdd").addEventListener("click", () => {
-  const txt = document.getElementById("newText").value.trim();
-  const cat = document.getElementById("newCat").value;
-  if(!txt) return;
+/* ======================
+   Trip card + countdown
+====================== */
+const tripDateEl = document.getElementById("tripDate");
+const fromEl = document.getElementById("from");
+const toEl = document.getElementById("to");
+const flightEl = document.getElementById("flight");
+const gateEl = document.getElementById("gate");
+const connectCityEl = document.getElementById("connectCity");
+const connectGateEl = document.getElementById("connectGate");
+const baggageEl = document.getElementById("baggage");
+const tripNotesEl = document.getElementById("tripNotes");
 
-  const st = loadState();
-  const arr = getTabList(st, activeTab);
-  arr.push({ id: crypto.randomUUID(), text: txt, cat, done:false });
-  setTabList(st, activeTab, arr);
+const countdownBox = document.getElementById("countdownBox");
+const countdownTitle = document.getElementById("countdownTitle");
+const countdownText = document.getElementById("countdownText");
 
-  document.getElementById("newText").value = "";
-  render();
-});
+function renderTrip(){
+  const trips = loadTrip();
+  const t = trips[activeTab] || {};
 
-document.getElementById("btnClearChecks").addEventListener("click", () => {
-  const st = loadState();
-  const arr = getTabList(st, activeTab).map(x => ({...x, done:false}));
-  setTabList(st, activeTab, arr);
-  render();
-});
+  tripDateEl.value = t.tripDate || "";
+  fromEl.value = t.from || "";
+  toEl.value = t.to || "";
+  flightEl.value = t.flight || "";
+  gateEl.value = t.gate || "";
+  connectCityEl.value = t.connectCity || "";
+  connectGateEl.value = t.connectGate || "";
+  baggageEl.value = t.baggage || "";
+  tripNotesEl.value = t.tripNotes || "";
 
-document.getElementById("btnLoadDefault").addEventListener("click", () => {
-  if(!confirm("Isso vai substituir a checklist atual desta aba pelo padrão. Continuar?")) return;
-  const st = loadState();
-  st[activeTab] = defaultLists[activeTab].map(x => ({...x, done:false, id: crypto.randomUUID()}));
-  saveState(st);
-  render();
-});
+  renderCountdown();
+}
 
-document.getElementById("btnResetAll").addEventListener("click", () => {
-  if(!confirm("Resetar ESTA aba (checklist + arquivos dela)?")) return;
-  const st = loadState();
-  st[activeTab] = null;
-  saveState(st);
-
-  // também limpa arquivos da aba
-  const files = loadFiles();
-  files[activeTab] = [];
-  saveFiles(files);
-
-  render();
-});
-
-/* =========================
-   Export / Import backup
-========================= */
-document.getElementById("btnExport").addEventListener("click", () => {
-  const data = {
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    name: localStorage.getItem(NAME_KEY) || "",
-    checklist: loadState(),
-    files: loadFiles()
+function saveTripFromForm(){
+  const trips = loadTrip();
+  trips[activeTab] = {
+    tripDate: tripDateEl.value || "",
+    from: fromEl.value.trim(),
+    to: toEl.value.trim(),
+    flight: flightEl.value.trim(),
+    gate: gateEl.value.trim(),
+    connectCity: connectCityEl.value.trim(),
+    connectGate: connectGateEl.value.trim(),
+    baggage: baggageEl.value.trim(),
+    tripNotes: tripNotesEl.value.trim()
   };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  saveTrip(trips);
+  renderCountdown();
+}
+
+document.getElementById("btnSaveTrip").addEventListener("click", ()=>{
+  saveTripFromForm();
+  alert("Cartão da viagem salvo ✅");
+});
+document.getElementById("btnClearTrip").addEventListener("click", ()=>{
+  if(!confirm("Limpar cartão da viagem desta aba?")) return;
+  const trips = loadTrip();
+  trips[activeTab] = {};
+  saveTrip(trips);
+  renderTrip();
+});
+
+function renderCountdown(){
+  const trips = loadTrip();
+  const t = trips[activeTab] || {};
+  const val = t.tripDate || "";
+
+  countdownBox.classList.remove("ok","bad");
+
+  if(!val){
+    countdownTitle.textContent = "Defina a data/hora da viagem";
+    countdownText.textContent = "Preencha o Cartão da Viagem para ver a contagem regressiva e alerta.";
+    countdownBox.querySelector(".dot").style.background = "var(--warn)";
+    return;
+  }
+
+  const target = new Date(val);
+  const now = new Date();
+  const diffMs = target - now;
+
+  if(isNaN(target.getTime())){
+    countdownTitle.textContent = "Data inválida";
+    countdownText.textContent = "Ajuste a data/hora no cartão.";
+    countdownBox.classList.add("bad");
+    return;
+  }
+
+  const abs = Math.abs(diffMs);
+  const mins = Math.floor(abs/60000);
+  const days = Math.floor(mins/(60*24));
+  const hrs = Math.floor((mins - days*24*60)/60);
+  const m = mins - days*24*60 - hrs*60;
+
+  // status logic
+  if(diffMs < 0){
+    countdownTitle.textContent = "Boa viagem! (data já passou)";
+    countdownText.textContent = "Se quiser, atualize para o próximo trecho ou próxima viagem.";
+    countdownBox.classList.add("ok");
+    countdownBox.querySelector(".dot").style.background = "var(--ok)";
+    return;
+  }
+
+  // same day / tomorrow / soon
+  const totalHours = diffMs / 3600000;
+  if(totalHours <= 12){
+    countdownTitle.textContent = "ALERTA: sua viagem está muito perto!";
+    countdownText.textContent = `Faltam ${hrs}h ${m}min. Confere documentos, carregadores e chegue cedo.`;
+    countdownBox.classList.add("bad");
+    countdownBox.querySelector(".dot").style.background = "var(--bad)";
+  }else if(totalHours <= 36){
+    countdownTitle.textContent = "Amanhã / nas próximas 24–36h";
+    countdownText.textContent = `Faltam ${days}d ${hrs}h. Hoje é dia de revisar tudo e separar a mochila.`;
+    countdownBox.querySelector(".dot").style.background = "var(--warn)";
+  }else{
+    countdownTitle.textContent = "Contagem regressiva";
+    countdownText.textContent = `Faltam ${days}d ${hrs}h ${m}min para a saída.`;
+    countdownBox.classList.add("ok");
+    countdownBox.querySelector(".dot").style.background = "var(--ok)";
+  }
+}
+
+/* ======================
+   Notes + places
+====================== */
+const notesEl = document.getElementById("notes");
+function renderNotes(){
+  const n = loadNotes();
+  notesEl.value = n[activeTab] || "";
+}
+document.getElementById("btnSaveNotes").addEventListener("click", ()=>{
+  const n = loadNotes();
+  n[activeTab] = notesEl.value;
+  saveNotes(n);
+  alert("Notas salvas ✅");
+});
+document.getElementById("btnClearNotes").addEventListener("click", ()=>{
+  if(!confirm("Limpar notas desta aba?")) return;
+  const n = loadNotes();
+  n[activeTab] = "";
+  saveNotes(n);
+  renderNotes();
+});
+
+function renderPlaces(){
+  const p = PLACES[activeTab] || [];
+  const el = document.getElementById("places");
+  el.innerHTML = p.map(x=>`• <a target="_blank" rel="noopener" href="${esc(x.u)}">${esc(x.t)}</a>`).join("<br/>");
+}
+
+/* ======================
+   Buttons: defaults + reset
+====================== */
+document.getElementById("btnDefault").addEventListener("click", ()=>{
+  if(!confirm("Recarregar itens padrão desta aba? Isso substitui sua lista atual.")) return;
+  const st = loadState();
+  st[activeTab] = DEFAULT[activeTab].map(([text,cat])=>({id:crypto.randomUUID(), text, cat, done:false}));
+  saveState(st);
+  renderAll();
+});
+document.getElementById("btnUncheck").addEventListener("click", ()=>{
+  const st = loadState();
+  const list = ensureList(st, activeTab).map(x=>({...x, done:false}));
+  st[activeTab] = list;
+  saveState(st);
+  renderAll();
+});
+document.getElementById("btnResetTab").addEventListener("click", ()=>{
+  if(!confirm("Resetar TUDO desta aba (checklist + cartão + notas)?")) return;
+  const st = loadState(); st[activeTab]=null; saveState(st);
+
+  const trips = loadTrip(); trips[activeTab] = {}; saveTrip(trips);
+  const notes = loadNotes(); notes[activeTab] = ""; saveNotes(notes);
+
+  renderAll();
+});
+
+/* ======================
+   Export / import backup
+====================== */
+document.getElementById("btnExport").addEventListener("click", ()=>{
+  const data = {
+    version: 2,
+    exportedAt: new Date().toISOString(),
+    name: localStorage.getItem(K.name) || "",
+    state: loadState(),
+    trip: loadTrip(),
+    notes: loadNotes()
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
   a.download = `partiu-backup-${activeTab}-${new Date().toISOString().slice(0,10)}.json`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
 });
 
-document.getElementById("importFile").addEventListener("change", async (e) => {
-  const file = e.target.files?.[0];
-  if(!file) return;
+document.getElementById("importFile").addEventListener("change", async (e)=>{
+  const f = e.target.files?.[0];
+  if(!f) return;
   try{
-    const txt = await file.text();
+    const txt = await f.text();
     const data = JSON.parse(txt);
+    if(!confirm("Importar vai sobrescrever seus dados atuais. Continuar?")) return;
 
-    if(!data || typeof data !== "object") throw new Error("Arquivo inválido");
-    if(!confirm("Importar backup vai sobrescrever seus dados atuais do app. Continuar?")) return;
-
-    if(typeof data.name === "string"){
-      localStorage.setItem(NAME_KEY, data.name);
-      nameInput.value = data.name;
-      applyName();
-    }
-    if(data.checklist) localStorage.setItem(APP_KEY, JSON.stringify(data.checklist));
-    if(data.files) localStorage.setItem(FILE_KEY, JSON.stringify(data.files));
-
-    alert("Backup importado com sucesso!");
-    render();
+    if(typeof data.name==="string"){ localStorage.setItem(K.name, data.name); nameEl.value=data.name; applyName(); }
+    if(data.state) localStorage.setItem(K.state, JSON.stringify(data.state));
+    if(data.trip) localStorage.setItem(K.trip, JSON.stringify(data.trip));
+    if(data.notes) localStorage.setItem(K.notes, JSON.stringify(data.notes));
+    saveTS();
+    alert("Backup importado ✅");
+    renderAll();
   }catch(err){
-    alert("Não consegui importar. Verifique se é um JSON válido do app.");
+    alert("Falha ao importar. Verifique se é um backup do app (JSON).");
   }finally{
-    e.target.value = "";
+    e.target.value="";
   }
 });
 
-/* =========================
-   Files (localStorage)
-========================= */
-function loadFiles(){
-  const raw = localStorage.getItem(FILE_KEY);
-  if(!raw) return { nl: [], br: [] };
-  try { return JSON.parse(raw); } catch { return { nl: [], br: [] }; }
-}
-function saveFiles(obj){
-  localStorage.setItem(FILE_KEY, JSON.stringify(obj));
-}
-
-const filePick = document.getElementById("filePick");
-const filesEl = document.getElementById("files");
-
-filePick.addEventListener("change", async (e) => {
-  const list = Array.from(e.target.files || []);
-  if(!list.length) return;
-
-  for(const f of list){
-    // limite bruto de 2.5MB por arquivo para não estourar storage fácil
-    if(f.size > 2_500_000){
-      alert(`Arquivo muito grande: ${f.name}\nDica: use imagem menor ou exporte em PDF mais leve.`);
-      continue;
-    }
-    const entry = await fileToEntry(f);
-    if(!entry) continue;
-
-    const all = loadFiles();
-    all[activeTab] = all[activeTab] || [];
-    all[activeTab].unshift(entry);
-
-    try{
-      saveFiles(all);
-    }catch(err){
-      alert("LocalStorage lotou. Apague alguns arquivos/fotos (ou exporte backup e limpe).");
-      break;
-    }
-  }
-
-  filePick.value = "";
-  renderFiles();
-});
-
-async function fileToEntry(file){
-  const isImage = file.type.startsWith("image/");
-  if(isImage){
-    // comprimir imagem para economizar
-    const dataUrl = await readAsDataURL(file);
-    const compressed = await compressImageDataUrl(dataUrl, 1280, 0.82);
-    return {
-      id: crypto.randomUUID(),
-      name: file.name,
-      type: file.type,
-      size: file.size,
-      kind: "image",
-      dataUrl: compressed,
-      addedAt: new Date().toISOString()
-    };
-  }else{
-    // não imagem: salvar como base64 também (pode lotar rápido)
-    const dataUrl = await readAsDataURL(file);
-    return {
-      id: crypto.randomUUID(),
-      name: file.name,
-      type: file.type || "application/octet-stream",
-      size: file.size,
-      kind: "file",
-      dataUrl,
-      addedAt: new Date().toISOString()
-    };
-  }
+/* ======================
+   Last saved
+====================== */
+function renderSavedAt(){
+  const el = document.getElementById("lastSaved");
+  const raw = localStorage.getItem(K.savedAt);
+  if(!raw){ el.textContent = "não salvo ainda"; return; }
+  const d = new Date(raw);
+  el.textContent = "salvo: " + d.toLocaleString();
 }
 
-function readAsDataURL(file){
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.onerror = rej;
-    r.readAsDataURL(file);
-  });
-}
+/* ======================
+   Confetti (lightweight)
+====================== */
+const fx = document.getElementById("fx");
+const ctx = fx.getContext("2d");
+let confettiOn = false;
 
-function compressImageDataUrl(dataUrl, maxW, quality){
-  return new Promise((res) => {
-    const img = new Image();
-    img.onload = () => {
-      const scale = Math.min(1, maxW / img.width);
-      const w = Math.round(img.width * scale);
-      const h = Math.round(img.height * scale);
+function confetti(){
+  if(confettiOn) return;
+  confettiOn = true;
+  fx.style.display = "block";
+  resizeFx();
 
-      const c = document.createElement("canvas");
-      c.width = w; c.height = h;
-      const ctx = c.getContext("2d");
-      ctx.drawImage(img, 0, 0, w, h);
-      const out = c.toDataURL("image/jpeg", quality);
-      res(out);
-    };
-    img.onerror = () => res(dataUrl);
-    img.src = dataUrl;
-  });
-}
+  const pieces = Array.from({length: 120}).map(()=>({
+    x: Math.random()*fx.width,
+    y: -20 - Math.random()*fx.height*0.3,
+    r: 4 + Math.random()*6,
+    vy: 2 + Math.random()*4,
+    vx: -1 + Math.random()*2,
+    a: Math.random()*Math.PI
+  }));
 
-function renderFiles(){
-  const all = loadFiles();
-  const arr = (all[activeTab] || []);
-  filesEl.innerHTML = "";
-
-  if(!arr.length){
-    filesEl.innerHTML = `<div class="muted" style="font-size:13px;">Nenhum arquivo nesta aba ainda.</div>`;
-    return;
-  }
-
-  arr.forEach(entry => {
-    const row = document.createElement("div");
-    row.className = "fileRow";
-
-    const left = document.createElement("div");
-    left.className = "left";
-
-    const thumb = document.createElement("div");
-    thumb.className = "thumb";
-    if(entry.kind === "image"){
-      const im = document.createElement("img");
-      im.src = entry.dataUrl;
-      thumb.appendChild(im);
-    }else{
-      thumb.textContent = "📎";
-    }
-
-    const name = document.createElement("div");
-    name.className = "fname";
-    const sizeKb = Math.round((entry.size || 0)/1024);
-    name.innerHTML = `<b>${escapeHtml(entry.name)}</b><small>${escapeHtml(entry.type)} • ${sizeKb} KB</small>`;
-
-    left.appendChild(thumb);
-    left.appendChild(name);
-
-    const right = document.createElement("div");
-    right.className = "actions";
-
-    // view/download link
-    const a = document.createElement("a");
-    a.className = "link";
-    a.href = entry.dataUrl;
-    a.target = "_blank";
-    a.rel = "noopener";
-    a.textContent = "Abrir";
-
-    const del = document.createElement("button");
-    del.className = "btn small danger";
-    del.textContent = "Excluir";
-    del.addEventListener("click", () => {
-      if(!confirm("Excluir este arquivo?")) return;
-      const files = loadFiles();
-      files[activeTab] = (files[activeTab]||[]).filter(x => x.id !== entry.id);
-      saveFiles(files);
-      renderFiles();
+  let t = 0;
+  const timer = setInterval(()=>{
+    t++;
+    ctx.clearRect(0,0,fx.width,fx.height);
+    pieces.forEach(p=>{
+      p.y += p.vy;
+      p.x += p.vx;
+      p.a += 0.08;
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.a);
+      ctx.fillStyle = `hsla(${Math.random()*360}, 90%, 55%, .9)`;
+      ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*1.6);
+      ctx.restore();
     });
 
-    right.appendChild(a);
-    right.appendChild(del);
-
-    row.appendChild(left);
-    row.appendChild(right);
-
-    filesEl.appendChild(row);
-  });
+    if(t>70){
+      clearInterval(timer);
+      ctx.clearRect(0,0,fx.width,fx.height);
+      fx.style.display = "none";
+      confettiOn = false;
+    }
+  }, 16);
 }
+function resizeFx(){
+  fx.width = window.innerWidth;
+  fx.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeFx);
 
-/* =========================
-   First render
-========================= */
-render();
+/* ======================
+   Render all
+====================== */
+function renderAll(){
+  renderSavedAt();
+  renderPlaces();
+  renderTrip();
+  renderNotes();
+  renderChecklist();
+}
+renderAll();
+
+// keep countdown live
+setInterval(()=>renderCountdown(), 30000);
 </script>
 </body>
 </html>
