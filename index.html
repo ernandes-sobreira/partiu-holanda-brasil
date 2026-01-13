@@ -6,30 +6,13 @@
   <title>Partiu — Checklist + Cartão de Viagem</title>
   <style>
     :root{
-      --bg:#f7f8fb;
-      --text:#111827;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --shadow:0 10px 28px rgba(17,24,39,.08);
-      --r:18px;
+      --bg:#f7f8fb; --text:#111827; --muted:#6b7280; --line:#e5e7eb;
+      --shadow:0 10px 28px rgba(17,24,39,.08); --r:18px;
+      --warn:#f59e0b; --bad:#ef4444; --ok:#16a34a;
 
-      --nl:#2563eb;
-      --br:#16a34a;
-
-      --doc:#7c3aed;
-      --saude:#ef4444;
-      --hig:#0ea5e9;
-      --ele:#f97316;
-      --roup:#a855f7;
-      --bag:#0f766e;
-      --fin:#22c55e;
-      --out:#64748b;
-
-      --warn:#f59e0b;
-      --bad:#ef4444;
-      --ok:#16a34a;
+      --doc:#7c3aed; --saude:#ef4444; --hig:#0ea5e9; --ele:#f97316;
+      --roup:#a855f7; --bag:#0f766e; --fin:#22c55e; --out:#64748b;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -39,17 +22,14 @@
                   var(--bg);
       color:var(--text);
     }
-
     header{
       position:sticky;top:0;z-index:10;
       backdrop-filter: blur(10px);
       background: rgba(247,248,251,.75);
       border-bottom:1px solid rgba(229,231,235,.7);
     }
-
     .top{
-      max-width:1050px;margin:0 auto;
-      padding:12px 14px;
+      max-width:1100px;margin:0 auto;padding:12px 14px;
       display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
     }
     .brand{display:flex;gap:10px;align-items:center}
@@ -61,31 +41,20 @@
     .title{line-height:1.05}
     .title b{display:block;font-size:15px}
     .title span{font-size:12px;color:var(--muted)}
-
     .person{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .pill{
-      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
-      background: rgba(255,255,255,.9);
-      font-size:12px;color:var(--muted);
-    }
-    input[type="text"], input[type="datetime-local"], input[type="time"]{
+    .pill{padding:8px 10px;border-radius:999px;border:1px solid var(--line);
+      background: rgba(255,255,255,.9);font-size:12px;color:var(--muted);}
+    input[type="text"], input[type="datetime-local"], select{
       padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;outline:none;
     }
-
-    .wrap{max-width:1050px;margin:0 auto;padding:16px 14px 60px}
-    .bigName{
-      font-weight:900;
-      font-size: clamp(26px, 5.6vw, 42px);
-      letter-spacing:-.02em;
-      margin-top:8px;
-    }
+    .wrap{max-width:1100px;margin:0 auto;padding:16px 14px 60px}
+    .bigName{font-weight:900;font-size: clamp(26px, 5.6vw, 42px);letter-spacing:-.02em;margin-top:8px;}
     .sub{color:var(--muted);margin-top:6px;font-size:14px}
 
-    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
     .tab{
       padding:10px 12px;border-radius:999px;border:1px solid var(--line);
-      background: rgba(255,255,255,.9);
-      cursor:pointer;user-select:none;
+      background: rgba(255,255,255,.9);cursor:pointer;user-select:none;
       display:flex;gap:8px;align-items:center;
       transition:.12s transform, .12s background, .12s border;
     }
@@ -94,59 +63,8 @@
       border-color: rgba(37,99,235,.35);
       background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(249,115,22,.08));
     }
-
-    .grid{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:14px;
-    }
-    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
-
-    .card{
-      background: rgba(255,255,255,.92);
-      border:1px solid var(--line);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      padding:14px;
-    }
-    .card h3{
-      margin:0 0 10px;
-      font-size:13px;
-      letter-spacing:.02em;
-      text-transform:uppercase;
-      color:#374151;
-      display:flex;align-items:center;justify-content:space-between;
-      gap:10px;
-    }
-
-    .badge{
-      font-size:11px;color:var(--muted);
-      border:1px solid var(--line);
-      background:#fff;
-      padding:4px 8px;border-radius:999px;
-      white-space:nowrap;
-    }
-
-    .alert{
-      display:flex;gap:10px;align-items:flex-start;
-      padding:12px;border-radius:16px;border:1px solid var(--line);
-      background:#fff;
-    }
-    .alert .dot{width:10px;height:10px;border-radius:999px;margin-top:5px;background:var(--warn)}
-    .alert.ok .dot{background:var(--ok)}
-    .alert.bad .dot{background:var(--bad)}
-    .alert b{display:block}
-    .alert small{color:var(--muted);display:block;margin-top:2px;line-height:1.35}
-
-    .progressRow{
-      margin-top:10px;
-      display:flex;gap:10px;align-items:center;justify-content:space-between;
-      padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;
-    }
-    .bar{height:10px;border-radius:999px;background:#eef2ff;overflow:hidden;flex:1;border:1px solid rgba(229,231,235,.95)}
-    .fill{height:100%;width:0%;background: linear-gradient(90deg, rgba(124,58,237,.95), rgba(249,115,22,.95))}
-    .pct{min-width:82px;text-align:right;color:var(--muted);font-size:12px}
+    .tab .x{margin-left:6px;color:rgba(17,24,39,.55);font-weight:900}
+    .tab .x:hover{color:rgba(239,68,68,.9)}
 
     .btn{
       border:none;border-radius:14px;padding:10px 12px;cursor:pointer;
@@ -156,73 +74,125 @@
     .btn.ghost{background:#fff;color:var(--text);border:1px solid var(--line);box-shadow:none;font-weight:700}
     .btn.danger{background: rgba(239,68,68,.92); box-shadow:0 10px 18px rgba(239,68,68,.18)}
     .btn.small{padding:8px 10px;border-radius:12px;font-size:12px}
-
     .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 
-    .cats{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top:12px;
-    }
-    @media (max-width: 740px){ .cats{grid-template-columns:1fr} }
+    .grid{margin-top:14px;display:grid;grid-template-columns: 1.15fr .85fr;gap:14px;}
+    @media (max-width: 950px){ .grid{grid-template-columns:1fr} }
 
-    .catCard{
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:#fff;
-      overflow:hidden;
+    .card{
+      background: rgba(255,255,255,.92);
+      border:1px solid var(--line);border-radius: var(--r);
+      box-shadow: var(--shadow);padding:14px;
     }
-    .catHead{
-      padding:12px 12px 10px;
+    .card h3{
+      margin:0 0 10px;font-size:13px;letter-spacing:.02em;text-transform:uppercase;color:#374151;
       display:flex;align-items:center;justify-content:space-between;gap:10px;
-      color:#fff;
     }
+    .badge{
+      font-size:11px;color:var(--muted);
+      border:1px solid var(--line);background:#fff;padding:4px 8px;border-radius:999px;white-space:nowrap;
+    }
+    .alert{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px;border-radius:16px;border:1px solid var(--line);background:#fff;
+    }
+    .alert .dot{width:10px;height:10px;border-radius:999px;margin-top:5px;background:var(--warn)}
+    .alert.ok .dot{background:var(--ok)}
+    .alert.bad .dot{background:var(--bad)}
+    .alert b{display:block}
+    .alert small{color:var(--muted);display:block;margin-top:2px;line-height:1.35}
+
+    .progressRow{
+      margin-top:10px;display:flex;gap:10px;align-items:center;justify-content:space-between;
+      padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;
+    }
+    .bar{height:10px;border-radius:999px;background:#eef2ff;overflow:hidden;flex:1;border:1px solid rgba(229,231,235,.95)}
+    .fill{height:100%;width:0%;background: linear-gradient(90deg, rgba(124,58,237,.95), rgba(249,115,22,.95))}
+    .pct{min-width:92px;text-align:right;color:var(--muted);font-size:12px}
+
+    .cats{display:grid;grid-template-columns: 1fr 1fr;gap:12px;margin-top:12px;}
+    @media (max-width: 740px){ .cats{grid-template-columns:1fr} }
+    .catCard{border-radius:18px;border:1px solid var(--line);background:#fff;overflow:hidden;}
+    .catHead{padding:12px 12px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff;}
     .catHead b{font-size:14px}
     .catHead .count{font-size:12px;opacity:.95}
     .catBody{padding:10px 12px 12px}
-
     .list{display:flex;flex-direction:column;gap:8px}
-    .item{
-      display:flex;gap:10px;align-items:flex-start;
-      padding:10px;border:1px solid var(--line);
-      border-radius:14px;background:#fff;
-    }
+    .item{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff;}
     .item input{margin-top:3px;transform:scale(1.15)}
     .item .meta{flex:1}
     .item .meta b{display:block;font-size:14px}
-    .item .meta small{color:var(--muted);display:block;margin-top:2px}
     .item .actions{display:flex;gap:6px}
-    .addMini{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap:8px;
-    }
+    .addMini{margin-top:10px;display:grid;grid-template-columns: 1fr auto;gap:8px;}
     .addMini input{width:100%}
 
     textarea{
-      width:100%;
-      min-height:120px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:#fff;
-      outline:none;
-      resize:vertical;
-      font-family: inherit;
+      width:100%;min-height:110px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);
+      background:#fff;outline:none;resize:vertical;font-family: inherit;
     }
     .linkList a{color:#2563eb;text-decoration:none;font-weight:800}
     .linkList a:hover{text-decoration:underline}
     .muted{color:var(--muted)}
     .hr{height:1px;background:var(--line);margin:12px 0}
 
-    /* confetti canvas */
+    .uploader{border:1px dashed rgba(124,58,237,.35);background: rgba(124,58,237,.06);padding:12px;border-radius:16px;}
+    .files{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+    .fileRow{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff;}
+    .fileLeft{display:flex;gap:10px;align-items:center;min-width:0}
+    .thumb{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#f9fafb;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .fname{min-width:0}
+    .fname b{display:block;max-width: 320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;}
+    .fname small{color:var(--muted)}
+    a.link{color:#2563eb;text-decoration:none;font-weight:900}
+    a.link:hover{text-decoration:underline}
+
     #fx{position:fixed;inset:0;pointer-events:none;z-index:999;display:none}
+
+    .modalBack{
+      position:fixed;inset:0;background:rgba(17,24,39,.45);display:none;align-items:center;justify-content:center;z-index:9999;
+      padding:18px;
+    }
+    .modal{
+      width:min(520px, 96vw);
+      background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .modal h4{margin:0 0 10px}
+    .modal .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:520px){ .modal .grid2{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
 <canvas id="fx"></canvas>
+
+<div class="modalBack" id="modalBack">
+  <div class="modal">
+    <h4>Adicionar novo país</h4>
+    <div class="grid2">
+      <div>
+        <div class="muted" style="font-size:12px;margin-bottom:6px">Nome do país</div>
+        <input id="newCountryName" type="text" placeholder="Ex.: Japão, Canadá, Bolívia" />
+      </div>
+      <div>
+        <div class="muted" style="font-size:12px;margin-bottom:6px">Clima base</div>
+        <select id="newCountryClimate">
+          <option value="temperado">Temperado</option>
+          <option value="tropical">Tropical</option>
+          <option value="frio">Frio</option>
+          <option value="deserto">Seco/Deserto</option>
+        </select>
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px;justify-content:flex-end">
+      <button class="btn ghost" id="btnCancelCountry">Cancelar</button>
+      <button class="btn" id="btnCreateCountry">Criar</button>
+    </div>
+    <div class="muted" style="font-size:12px;margin-top:8px;line-height:1.35">
+      O país novo ganha checklist, cartão, notas e arquivos próprios.
+    </div>
+  </div>
+</div>
 
 <header>
   <div class="top">
@@ -230,7 +200,7 @@
       <div class="logo"></div>
       <div class="title">
         <b>Partiu — Checklist + Cartão de Viagem</b>
-        <span>leve • localStorage • prático</span>
+        <span>com países ilimitados • localStorage</span>
       </div>
     </div>
     <div class="person">
@@ -242,11 +212,11 @@
 
 <div class="wrap">
   <div class="bigName" id="bigName">Seu checklist</div>
-  <div class="sub">Tudo salva neste aparelho. Duas abas: Holanda e Brasil.</div>
+  <div class="sub" id="subline">Tudo salva neste aparelho. Crie países e adapte por clima.</div>
 
-  <div class="tabs">
-    <div class="tab active" data-tab="nl">🇳🇱 Partiu Holanda</div>
-    <div class="tab" data-tab="br">🇧🇷 Partiu Brasil</div>
+  <div class="tabs" id="tabs">
+    <!-- tabs injected -->
+    <button class="btn ghost" id="btnAddCountry">+ Novo país</button>
   </div>
 
   <div class="grid">
@@ -265,7 +235,7 @@
         </div>
       </div>
 
-      <div class="progressRow" title="Progresso do checklist da aba">
+      <div class="progressRow">
         <div class="bar"><div class="fill" id="fill"></div></div>
         <div class="pct" id="pct">0%</div>
       </div>
@@ -273,7 +243,7 @@
       <div class="row" style="margin-top:10px">
         <button class="btn small ghost" id="btnDefault">Recarregar itens padrão</button>
         <button class="btn small ghost" id="btnUncheck">Desmarcar tudo</button>
-        <button class="btn small danger" id="btnResetTab">Resetar aba</button>
+        <button class="btn small danger" id="btnResetTab">Resetar país</button>
       </div>
 
       <div class="hr"></div>
@@ -295,11 +265,10 @@
 
     <!-- RIGHT -->
     <aside class="card">
-      <h3>Cartão da Viagem <span class="badge" id="tabLabel">Holanda</span></h3>
+      <h3>Cartão da Viagem <span class="badge" id="tabLabel">—</span></h3>
 
       <div class="row">
         <input id="tripDate" type="datetime-local" />
-        <input id="tripTime" type="time" title="Hora extra (opcional)" style="display:none"/>
       </div>
 
       <div class="row" style="margin-top:8px">
@@ -321,7 +290,7 @@
         <input id="baggage" type="text" placeholder="Bagagem: despacho? peso? (ex: 1x23kg + 1 mochila)" style="flex:1" />
       </div>
 
-      <textarea id="tripNotes" placeholder="Notas rápidas: horário de check-in, onde trocar de voo, o que fazer ao chegar, endereço do hotel, contatos, etc."></textarea>
+      <textarea id="tripNotes" placeholder="Notas rápidas: check-in, onde trocar de voo, o que fazer ao chegar, endereço do hotel, contatos, etc."></textarea>
 
       <div class="row" style="margin-top:10px">
         <button class="btn" id="btnSaveTrip">Salvar cartão</button>
@@ -330,16 +299,31 @@
 
       <div class="hr"></div>
 
+      <h3>Arquivos & Fotos (localStorage)</h3>
+      <div class="uploader">
+        <div class="muted" style="font-size:12px;line-height:1.35">
+          Guarde: passaporte, seguro, reservas, tickets, comprovantes.
+          <br><b>Obs:</b> limite ~5–10MB. Imagens são comprimidas automaticamente.
+        </div>
+        <div class="row" style="margin-top:10px">
+          <input id="filePick" type="file" multiple accept="image/*,.pdf,.txt,.json,.csv,.doc,.docx,.xls,.xlsx" />
+          <button class="btn small ghost" id="btnClearFiles">Limpar arquivos deste país</button>
+        </div>
+      </div>
+      <div class="files" id="files"></div>
+
+      <div class="hr"></div>
+
       <h3>Lugares/Links (clicáveis)</h3>
       <div class="muted" style="font-size:12px;margin-top:-6px;margin-bottom:8px">
-        Você pode editar e adicionar links nas Notas & Links abaixo também.
+        Padrão simples. Cole links do seu país nas Notas & Links também.
       </div>
       <div class="linkList" id="places"></div>
 
       <div class="hr"></div>
 
       <h3>Notas & Links</h3>
-      <textarea id="notes" placeholder="Cole links aqui (reservas, seguro, mapa, museus), ou escreva lembretes."></textarea>
+      <textarea id="notes" placeholder="Cole links aqui (reservas, seguro, mapas), ou escreva lembretes."></textarea>
       <div class="row" style="margin-top:10px">
         <button class="btn ghost" id="btnSaveNotes">Salvar notas</button>
         <button class="btn ghost" id="btnClearNotes">Limpar notas</button>
@@ -350,17 +334,27 @@
 
 <script>
 /* ======================
-   Storage
+   v4 storage (countries)
 ====================== */
 const K = {
-  name: "partiu_name_v2",
-  state: "partiu_state_v2",
-  trip: "partiu_trip_v2",
-  notes: "partiu_notes_v2",
-  savedAt: "partiu_savedAt_v2"
-};
+  name: "partiu_name_v4",
+  meta: "partiu_meta_v4",        // countries list + settings
+  state: "partiu_state_v4",      // checklist per country id
+  trip: "partiu_trip_v4",        // trip per country id
+  notes: "partiu_notes_v4",      // notes per country id
+  files: "partiu_files_v4",      // files per country id
+  savedAt: "partiu_savedAt_v4",
 
-let activeTab = "nl";
+  // old keys (v3) for migration
+  old: {
+    name: "partiu_name_v3",
+    state: "partiu_state_v3",
+    trip: "partiu_trip_v3",
+    notes: "partiu_notes_v3",
+    files: "partiu_files_v3",
+    savedAt: "partiu_savedAt_v3"
+  }
+};
 
 const CATS = [
   {key:"Documentos", color:"var(--doc)"},
@@ -373,146 +367,213 @@ const CATS = [
   {key:"Outros", color:"var(--out)"}
 ];
 
-const DEFAULT = {
-  nl: [
-    // Documentos
-    ["Passaporte válido (ideal: +3 meses após saída)", "Documentos"],
-    ["Passagens/itinerário (PDF ou print)", "Documentos"],
-    ["Reserva de hospedagem (ou carta-convite)", "Documentos"],
-    ["Seguro-viagem (Schengen: cobertura alta)", "Documentos"],
-    ["Comprovantes financeiros (cartão/limite/extrato)", "Documentos"],
-    ["Cópia do passaporte (foto no celular + aqui nas notas)", "Documentos"],
+const BASE_ESSENTIALS = [
+  ["Carregador do celular", "Eletrônicos"],
+  ["Cabo extra (reserva)", "Eletrônicos"],
+  ["Power bank carregado", "Eletrônicos"],
+  ["Remédio pra dor de cabeça", "Saúde"],
+  ["Remédios de uso contínuo + receita", "Saúde"],
+  ["Band-aid/curativo", "Saúde"],
+  ["Escova de dente", "Higiene"],
+  ["Pasta de dente", "Higiene"],
+  ["Lenço umedecido", "Higiene"],
+  ["Álcool em gel (pequeno)", "Higiene"],
+  ["Desodorante", "Higiene"],
+  ["Etiqueta de mala (nome/contato)", "Bagagem"],
+  ["Mochila de mão organizada", "Bagagem"],
+  ["Cartões + dinheiro em espécie", "Financeiro"],
+];
 
-    // Saúde
-    ["Remédio pra dor de cabeça (ex.: paracetamol/ibuprofeno)", "Saúde"],
-    ["Remédio para alergia (se você usa)", "Saúde"],
-    ["Band-aid/curativo + pomadinha simples", "Saúde"],
-    ["Remédios de uso contínuo + receita", "Saúde"],
-
-    // Higiene
-    ["Escova de dente", "Higiene"],
-    ["Pasta de dente", "Higiene"],
-    ["Fio dental", "Higiene"],
-    ["Lenço umedecido", "Higiene"],
-    ["Álcool em gel (pequeno)", "Higiene"],
-    ["Sabonete em sachê / mini", "Higiene"],
-    ["Desodorante", "Higiene"],
-
-    // Eletrônicos
-    ["Carregador do celular", "Eletrônicos"],
-    ["Cabo extra (reserva)", "Eletrônicos"],
-    ["Power bank carregado", "Eletrônicos"],
-    ["Adaptador de tomada (padrão europeu)", "Eletrônicos"],
-    ["Fone de ouvido", "Eletrônicos"],
-
-    // Roupas
-    ["Casaco corta-vento/chuva (Holanda venta e chove)", "Roupas"],
+const CLIMATE_PACKS = {
+  temperado: [
+    ["Casaco corta-vento/chuva", "Roupas"],
+    ["Camadas (segunda pele/moletom)", "Roupas"],
     ["Tênis confortável (muita caminhada)", "Roupas"],
-    ["Meias extras", "Roupas"],
-
-    // Bagagem
-    ["Etiqueta de mala (nome/contato)", "Bagagem"],
-    ["Cadeado", "Bagagem"],
-    ["Mochila de mão organizada", "Bagagem"],
-
-    // Financeiro
-    ["Cartão internacional habilitado + aviso ao banco", "Financeiro"],
-    ["Euro em espécie (pouco) — só por segurança", "Financeiro"],
-
-    // Outros
-    ["Garrafa de água vazia (encher após segurança)", "Outros"],
-    ["Lanchinho prático para o aeroporto", "Outros"],
-    ["Checar clima 24h antes", "Outros"]
+    ["Adaptador de tomada (ver padrão do país)", "Eletrônicos"],
   ],
-  br: [
-    ["Documento com foto (RG bom ou CNH)", "Documentos"],
-    ["Passagens/itinerário (print)", "Documentos"],
-    ["Reserva/endereços importantes", "Documentos"],
-
-    ["Remédio pra dor de cabeça", "Saúde"],
-    ["Remédios de uso contínuo + receita", "Saúde"],
+  tropical: [
     ["Protetor solar", "Saúde"],
     ["Repelente", "Saúde"],
-
-    ["Escova de dente", "Higiene"],
-    ["Pasta de dente", "Higiene"],
-    ["Lenço umedecido", "Higiene"],
-    ["Álcool em gel", "Higiene"],
-
-    ["Carregador do celular", "Eletrônicos"],
-    ["Power bank", "Eletrônicos"],
-
-    ["Roupas adequadas ao clima", "Roupas"],
-    ["Calçado confortável", "Roupas"],
-
-    ["Etiqueta/cadeado de mala", "Bagagem"],
-    ["Mochila de mão organizada", "Bagagem"],
-
-    ["Cartões + dinheiro em espécie", "Financeiro"],
-
-    ["Fechar gás/água, lixo fora, avisar alguém", "Outros"]
+    ["Capa de chuva leve", "Roupas"],
+    ["Garrafa de água", "Outros"],
+  ],
+  frio: [
+    ["Casaco pesado", "Roupas"],
+    ["Luvas + gorro", "Roupas"],
+    ["Segunda pele térmica", "Roupas"],
+    ["Hidratante/lip balm", "Higiene"],
+  ],
+  deserto: [
+    ["Protetor solar forte", "Saúde"],
+    ["Óculos escuros", "Outros"],
+    ["Hidratante/lip balm", "Higiene"],
+    ["Garrafa de água", "Outros"],
   ]
 };
 
-const PLACES = {
+const DEFAULT_PLACES = {
   nl: [
     {t:"Anne Frank House (reservar)", u:"https://www.annefrank.org/"},
     {t:"Rijksmuseum", u:"https://www.rijksmuseum.nl/"},
     {t:"Van Gogh Museum", u:"https://www.vangoghmuseum.nl/"},
-    {t:"I amsterdam (dicas/agenda)", u:"https://www.iamsterdam.com/"},
-    {t:"NS (trens)", u:"https://www.ns.nl/en"},
+    {t:"I amsterdam", u:"https://www.iamsterdam.com/"},
+    {t:"NS (trens)", u:"https://www.ns.nl/en"}
   ],
   br: [
     {t:"Google Maps", u:"https://maps.google.com/"},
-    {t:"Previsão do tempo (geral)", u:"https://www.windy.com/"},
+    {t:"Windy (tempo)", u:"https://www.windy.com/"}
+  ],
+  generic: [
+    {t:"Google Maps", u:"https://maps.google.com/"},
+    {t:"Previsão do tempo (Windy)", u:"https://www.windy.com/"},
+    {t:"Tradutor (Google Translate)", u:"https://translate.google.com/"}
   ]
 };
 
+/* ======================
+   Helpers
+====================== */
 function nowISO(){ return new Date().toISOString(); }
 function saveTS(){ localStorage.setItem(K.savedAt, nowISO()); renderSavedAt(); }
-
-function loadState(){
-  const raw = localStorage.getItem(K.state);
-  if(!raw) return { nl:null, br:null };
-  try{ return JSON.parse(raw); }catch{ return { nl:null, br:null }; }
-}
-function saveState(st){ localStorage.setItem(K.state, JSON.stringify(st)); saveTS(); }
-
-function ensureList(st, tab){
-  if(!st[tab]){
-    st[tab] = DEFAULT[tab].map(([text,cat])=>({id:crypto.randomUUID(), text, cat, done:false}));
-    saveState(st);
-  }
-  return st[tab];
-}
-
-function loadTrip(){
-  const raw = localStorage.getItem(K.trip);
-  if(!raw) return { nl:{}, br:{} };
-  try{
-    const o = JSON.parse(raw);
-    return { nl:o.nl||{}, br:o.br||{} };
-  }catch{ return { nl:{}, br:{} }; }
-}
-function saveTrip(o){ localStorage.setItem(K.trip, JSON.stringify(o)); saveTS(); }
-
-function loadNotes(){
-  const raw = localStorage.getItem(K.notes);
-  if(!raw) return { nl:"", br:"" };
-  try{
-    const o = JSON.parse(raw);
-    return { nl:o.nl||"", br:o.br||"" };
-  }catch{ return { nl:"", br:"" }; }
-}
-function saveNotes(o){ localStorage.setItem(K.notes, JSON.stringify(o)); saveTS(); }
-
 function esc(s){ return (s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"); }
+function uid(){ return crypto.randomUUID ? crypto.randomUUID() : (Math.random().toString(16).slice(2)+Date.now()); }
+
+function loadJSON(key, fallback){
+  const raw = localStorage.getItem(key);
+  if(!raw) return fallback;
+  try{ return JSON.parse(raw); }catch{ return fallback; }
+}
+function saveJSON(key, obj){ localStorage.setItem(key, JSON.stringify(obj)); saveTS(); }
+
+function loadMeta(){
+  const fb = {
+    activeId: null,
+    countries: [
+      {id:"nl", name:"Holanda", climate:"temperado", fixed:true},
+      {id:"br", name:"Brasil", climate:"tropical", fixed:true}
+    ]
+  };
+  return loadJSON(K.meta, fb);
+}
+function saveMeta(meta){ saveJSON(K.meta, meta); }
+
+function loadState(){ return loadJSON(K.state, {}); }
+function loadTrip(){ return loadJSON(K.trip, {}); }
+function loadNotes(){ return loadJSON(K.notes, {}); }
+function loadFiles(){ return loadJSON(K.files, {}); }
+
+function ensureCountryData(country){
+  const st = loadState();
+  if(!st[country.id]){
+    const base = [...BASE_ESSENTIALS, ...(CLIMATE_PACKS[country.climate]||[])];
+    // add doc essentials generic
+    const docs = [
+      ["Documento/passaporte (conforme destino)", "Documentos"],
+      ["Passagens/itinerário (print/PDF)", "Documentos"],
+      ["Reserva/hospedagem (ou endereço)", "Documentos"]
+    ];
+    st[country.id] = [...docs, ...base].map(([text,cat])=>({id:uid(), text, cat, done:false}));
+    saveJSON(K.state, st);
+  }
+  const trip = loadTrip(); if(!trip[country.id]){ trip[country.id] = {}; saveJSON(K.trip, trip); }
+  const notes = loadNotes(); if(typeof notes[country.id] !== "string"){ notes[country.id] = ""; saveJSON(K.notes, notes); }
+  const files = loadFiles(); if(!Array.isArray(files[country.id])){ files[country.id] = []; saveJSON(K.files, files); }
+}
 
 /* ======================
-   UI: name + tabs
+   Migration from v3 -> v4
+====================== */
+(function migrateOnce(){
+  const already = localStorage.getItem(K.meta);
+  if(already) return;
+
+  // Create meta
+  const meta = loadMeta();
+
+  // migrate name
+  const oldName = localStorage.getItem(K.old.name);
+  if(oldName && !localStorage.getItem(K.name)) localStorage.setItem(K.name, oldName);
+
+  // migrate checklist (v3 had nl/br)
+  const oldState = loadJSON(K.old.state, null);
+  const st = {};
+  if(oldState && (oldState.nl || oldState.br)){
+    if(oldState.nl) st["nl"] = oldState.nl;
+    if(oldState.br) st["br"] = oldState.br;
+  }
+  if(Object.keys(st).length) localStorage.setItem(K.state, JSON.stringify(st));
+
+  // migrate trip/notes/files
+  const oldTrip = loadJSON(K.old.trip, null);
+  if(oldTrip && (oldTrip.nl || oldTrip.br)) localStorage.setItem(K.trip, JSON.stringify({nl: oldTrip.nl||{}, br: oldTrip.br||{}}));
+
+  const oldNotes = loadJSON(K.old.notes, null);
+  if(oldNotes && (oldNotes.nl || oldNotes.br)) localStorage.setItem(K.notes, JSON.stringify({nl: oldNotes.nl||"", br: oldNotes.br||""}));
+
+  const oldFiles = loadJSON(K.old.files, null);
+  if(oldFiles && (oldFiles.nl || oldFiles.br)) localStorage.setItem(K.files, JSON.stringify({nl: oldFiles.nl||[], br: oldFiles.br||[]}));
+
+  // savedAt
+  const oldSavedAt = localStorage.getItem(K.old.savedAt);
+  if(oldSavedAt) localStorage.setItem(K.savedAt, oldSavedAt);
+
+  // activate NL by default
+  meta.activeId = "nl";
+  localStorage.setItem(K.meta, JSON.stringify(meta));
+})();
+
+/* ======================
+   UI refs
 ====================== */
 const nameEl = document.getElementById("name");
 const bigNameEl = document.getElementById("bigName");
+const tabsEl = document.getElementById("tabs");
+const tabLabelEl = document.getElementById("tabLabel");
+
+const catsEl = document.getElementById("cats");
+const fillEl = document.getElementById("fill");
+const pctEl = document.getElementById("pct");
+const itemsCountEl = document.getElementById("itemsCount");
+
+const tripDateEl = document.getElementById("tripDate");
+const fromEl = document.getElementById("from");
+const toEl = document.getElementById("to");
+const flightEl = document.getElementById("flight");
+const gateEl = document.getElementById("gate");
+const connectCityEl = document.getElementById("connectCity");
+const connectGateEl = document.getElementById("connectGate");
+const baggageEl = document.getElementById("baggage");
+const tripNotesEl = document.getElementById("tripNotes");
+
+const countdownBox = document.getElementById("countdownBox");
+const countdownTitle = document.getElementById("countdownTitle");
+const countdownText = document.getElementById("countdownText");
+
+const notesEl = document.getElementById("notes");
+const placesEl = document.getElementById("places");
+
+const filePick = document.getElementById("filePick");
+const filesEl = document.getElementById("files");
+
+/* ======================
+   Active country getters
+====================== */
+function getMeta(){ return loadMeta(); }
+function getActiveCountry(){
+  const meta = getMeta();
+  const id = meta.activeId || meta.countries[0].id;
+  return meta.countries.find(c=>c.id===id) || meta.countries[0];
+}
+function setActiveCountry(id){
+  const meta = getMeta();
+  meta.activeId = id;
+  saveMeta(meta);
+  renderAll();
+}
+
+/* ======================
+   Name
+====================== */
 nameEl.value = localStorage.getItem(K.name) || "";
 function applyName(){
   const n = nameEl.value.trim();
@@ -522,29 +583,101 @@ function applyName(){
 nameEl.addEventListener("input", applyName);
 applyName();
 
-document.querySelectorAll(".tab").forEach(t=>{
-  t.addEventListener("click", ()=>{
-    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-    t.classList.add("active");
-    activeTab = t.dataset.tab;
-    document.getElementById("tabLabel").textContent = activeTab==="nl" ? "Holanda" : "Brasil";
-    renderAll();
+/* ======================
+   Tabs render + delete
+====================== */
+function renderTabs(){
+  const meta = getMeta();
+  // remove old injected tabs (keep add button)
+  const addBtn = document.getElementById("btnAddCountry");
+  tabsEl.innerHTML = "";
+  meta.countries.forEach(c=>{
+    const t = document.createElement("div");
+    t.className = "tab" + ((meta.activeId||"nl")===c.id ? " active" : "");
+    t.innerHTML = `${esc(c.name)} <span class="muted" style="font-size:12px">(${esc(c.climate)})</span>` + (c.fixed ? "" : `<span class="x" title="Remover país">×</span>`);
+    t.addEventListener("click", (ev)=>{
+      // if clicked X
+      if(!c.fixed && ev.target && ev.target.classList.contains("x")){
+        ev.stopPropagation();
+        removeCountry(c.id);
+        return;
+      }
+      setActiveCountry(c.id);
+    });
+    tabsEl.appendChild(t);
   });
-});
+  tabsEl.appendChild(addBtn);
+}
 
 /* ======================
-   Render checklist in category cards
+   Add/remove country modal
 ====================== */
-const catsEl = document.getElementById("cats");
-const fillEl = document.getElementById("fill");
-const pctEl = document.getElementById("pct");
-const itemsCountEl = document.getElementById("itemsCount");
+const modalBack = document.getElementById("modalBack");
+const newCountryName = document.getElementById("newCountryName");
+const newCountryClimate = document.getElementById("newCountryClimate");
 
+document.getElementById("btnAddCountry").addEventListener("click", ()=>{
+  newCountryName.value = "";
+  newCountryClimate.value = "temperado";
+  modalBack.style.display = "flex";
+  setTimeout(()=>newCountryName.focus(), 20);
+});
+document.getElementById("btnCancelCountry").addEventListener("click", ()=> modalBack.style.display="none");
+modalBack.addEventListener("click", (e)=>{ if(e.target===modalBack) modalBack.style.display="none"; });
+
+document.getElementById("btnCreateCountry").addEventListener("click", ()=>{
+  const name = (newCountryName.value||"").trim();
+  const climate = newCountryClimate.value;
+  if(!name){ alert("Digite o nome do país."); return; }
+
+  const meta = getMeta();
+  // create id safe
+  let id = name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+  if(!id) id = uid();
+  // avoid collisions
+  if(meta.countries.some(c=>c.id===id)) id = id + "-" + Math.floor(Math.random()*999);
+
+  const country = {id, name, climate, fixed:false};
+  meta.countries.push(country);
+  meta.activeId = id;
+  saveMeta(meta);
+
+  ensureCountryData(country);
+  modalBack.style.display="none";
+  renderAll();
+});
+
+function removeCountry(id){
+  if(!confirm("Remover este país? (dados locais deste país serão apagados)")) return;
+
+  const meta = getMeta();
+  const idx = meta.countries.findIndex(c=>c.id===id);
+  if(idx<0) return;
+  const wasActive = meta.activeId===id;
+
+  meta.countries = meta.countries.filter(c=>c.id!==id);
+  if(wasActive) meta.activeId = meta.countries[0]?.id || "nl";
+  saveMeta(meta);
+
+  // delete data
+  const st = loadState(); delete st[id]; saveJSON(K.state, st);
+  const tr = loadTrip(); delete tr[id]; saveJSON(K.trip, tr);
+  const nt = loadNotes(); delete nt[id]; saveJSON(K.notes, nt);
+  const fl = loadFiles(); delete fl[id]; saveJSON(K.files, fl);
+
+  renderAll();
+}
+
+/* ======================
+   Checklist render
+====================== */
 function renderChecklist(){
-  const st = loadState();
-  const list = ensureList(st, activeTab);
+  const country = getActiveCountry();
+  ensureCountryData(country);
 
-  // counts + progress
+  const st = loadState();
+  const list = st[country.id] || [];
+
   const total = list.length || 1;
   const done = list.filter(x=>x.done).length;
   const pct = Math.round((done/total)*100);
@@ -552,10 +685,8 @@ function renderChecklist(){
   pctEl.textContent = `${pct}% (${done}/${list.length})`;
   itemsCountEl.textContent = `${list.length} itens`;
 
-  // Confetti when 100%
   if(list.length>0 && done===list.length) confetti();
 
-  // group by category
   const map = {};
   CATS.forEach(c=>map[c.key]=[]);
   list.forEach(it=>{
@@ -567,6 +698,7 @@ function renderChecklist(){
   CATS.forEach(cat=>{
     const arr = map[cat.key] || [];
     const d = arr.filter(x=>x.done).length;
+
     const card = document.createElement("div");
     card.className = "catCard";
 
@@ -586,9 +718,7 @@ function renderChecklist(){
       row.className = "item";
       row.innerHTML = `
         <input type="checkbox" ${item.done?"checked":""}/>
-        <div class="meta">
-          <b>${esc(item.text)}</b>
-        </div>
+        <div class="meta"><b>${esc(item.text)}</b></div>
         <div class="actions">
           <button class="btn small ghost" title="Editar">✏️</button>
           <button class="btn small danger" title="Excluir">🗑️</button>
@@ -601,9 +731,9 @@ function renderChecklist(){
 
       cb.addEventListener("change", ()=>{
         const s = loadState();
-        const a = ensureList(s, activeTab);
+        const a = s[country.id] || [];
         const idx = a.findIndex(x=>x.id===item.id);
-        if(idx>=0){ a[idx].done = cb.checked; saveState(s); }
+        if(idx>=0){ a[idx].done = cb.checked; s[country.id]=a; saveJSON(K.state, s); }
         renderAll();
       });
 
@@ -611,28 +741,28 @@ function renderChecklist(){
         const nt = prompt("Editar item:", item.text);
         if(nt===null) return;
         const s = loadState();
-        const a = ensureList(s, activeTab);
+        const a = s[country.id] || [];
         const idx = a.findIndex(x=>x.id===item.id);
-        if(idx>=0){ a[idx].text = (nt.trim()||a[idx].text); saveState(s); }
+        if(idx>=0){ a[idx].text = (nt.trim()||a[idx].text); s[country.id]=a; saveJSON(K.state, s); }
         renderAll();
       });
 
       btnD.addEventListener("click", ()=>{
         if(!confirm("Excluir este item?")) return;
         const s = loadState();
-        s[activeTab] = ensureList(s, activeTab).filter(x=>x.id!==item.id);
-        saveState(s);
+        const a = (s[country.id] || []).filter(x=>x.id!==item.id);
+        s[country.id]=a;
+        saveJSON(K.state, s);
         renderAll();
       });
 
       listBox.appendChild(row);
     });
 
-    // add mini
     const add = document.createElement("div");
     add.className = "addMini";
     add.innerHTML = `
-      <input type="text" placeholder="Adicionar em ${esc(cat.key)} (ex.: lenço umedecido)" />
+      <input type="text" placeholder="Adicionar em ${esc(cat.key)}" />
       <button class="btn small">Adicionar</button>
     `;
     const inp = add.querySelector("input");
@@ -641,9 +771,10 @@ function renderChecklist(){
       const txt = inp.value.trim();
       if(!txt) return;
       const s = loadState();
-      const a = ensureList(s, activeTab);
-      a.push({id:crypto.randomUUID(), text:txt, cat:cat.key, done:false});
-      saveState(s);
+      const a = s[country.id] || [];
+      a.push({id:uid(), text:txt, cat:cat.key, done:false});
+      s[country.id]=a;
+      saveJSON(K.state, s);
       inp.value="";
       renderAll();
     });
@@ -658,25 +789,16 @@ function renderChecklist(){
 }
 
 /* ======================
-   Trip card + countdown
+   Trip + countdown
 ====================== */
-const tripDateEl = document.getElementById("tripDate");
-const fromEl = document.getElementById("from");
-const toEl = document.getElementById("to");
-const flightEl = document.getElementById("flight");
-const gateEl = document.getElementById("gate");
-const connectCityEl = document.getElementById("connectCity");
-const connectGateEl = document.getElementById("connectGate");
-const baggageEl = document.getElementById("baggage");
-const tripNotesEl = document.getElementById("tripNotes");
-
-const countdownBox = document.getElementById("countdownBox");
-const countdownTitle = document.getElementById("countdownTitle");
-const countdownText = document.getElementById("countdownText");
-
 function renderTrip(){
+  const country = getActiveCountry();
+  ensureCountryData(country);
+
+  tabLabelEl.textContent = `${country.name} (${country.climate})`;
+
   const trips = loadTrip();
-  const t = trips[activeTab] || {};
+  const t = trips[country.id] || {};
 
   tripDateEl.value = t.tripDate || "";
   fromEl.value = t.from || "";
@@ -692,8 +814,9 @@ function renderTrip(){
 }
 
 function saveTripFromForm(){
+  const country = getActiveCountry();
   const trips = loadTrip();
-  trips[activeTab] = {
+  trips[country.id] = {
     tripDate: tripDateEl.value || "",
     from: fromEl.value.trim(),
     to: toEl.value.trim(),
@@ -704,7 +827,7 @@ function saveTripFromForm(){
     baggage: baggageEl.value.trim(),
     tripNotes: tripNotesEl.value.trim()
   };
-  saveTrip(trips);
+  saveJSON(K.trip, trips);
   renderCountdown();
 }
 
@@ -713,16 +836,18 @@ document.getElementById("btnSaveTrip").addEventListener("click", ()=>{
   alert("Cartão da viagem salvo ✅");
 });
 document.getElementById("btnClearTrip").addEventListener("click", ()=>{
-  if(!confirm("Limpar cartão da viagem desta aba?")) return;
+  if(!confirm("Limpar cartão da viagem deste país?")) return;
+  const country = getActiveCountry();
   const trips = loadTrip();
-  trips[activeTab] = {};
-  saveTrip(trips);
+  trips[country.id] = {};
+  saveJSON(K.trip, trips);
   renderTrip();
 });
 
 function renderCountdown(){
+  const country = getActiveCountry();
   const trips = loadTrip();
-  const t = trips[activeTab] || {};
+  const t = trips[country.id] || {};
   const val = t.tripDate || "";
 
   countdownBox.classList.remove("ok","bad");
@@ -745,23 +870,21 @@ function renderCountdown(){
     return;
   }
 
-  const abs = Math.abs(diffMs);
-  const mins = Math.floor(abs/60000);
-  const days = Math.floor(mins/(60*24));
-  const hrs = Math.floor((mins - days*24*60)/60);
-  const m = mins - days*24*60 - hrs*60;
-
-  // status logic
   if(diffMs < 0){
     countdownTitle.textContent = "Boa viagem! (data já passou)";
-    countdownText.textContent = "Se quiser, atualize para o próximo trecho ou próxima viagem.";
+    countdownText.textContent = "Atualize para o próximo trecho ou próxima viagem.";
     countdownBox.classList.add("ok");
     countdownBox.querySelector(".dot").style.background = "var(--ok)";
     return;
   }
 
-  // same day / tomorrow / soon
+  const mins = Math.floor(diffMs/60000);
+  const days = Math.floor(mins/(60*24));
+  const hrs = Math.floor((mins - days*24*60)/60);
+  const m = mins - days*24*60 - hrs*60;
+
   const totalHours = diffMs / 3600000;
+
   if(totalHours <= 12){
     countdownTitle.textContent = "ALERTA: sua viagem está muito perto!";
     countdownText.textContent = `Faltam ${hrs}h ${m}min. Confere documentos, carregadores e chegue cedo.`;
@@ -782,75 +905,251 @@ function renderCountdown(){
 /* ======================
    Notes + places
 ====================== */
-const notesEl = document.getElementById("notes");
 function renderNotes(){
+  const country = getActiveCountry();
   const n = loadNotes();
-  notesEl.value = n[activeTab] || "";
+  notesEl.value = n[country.id] || "";
 }
+
 document.getElementById("btnSaveNotes").addEventListener("click", ()=>{
+  const country = getActiveCountry();
   const n = loadNotes();
-  n[activeTab] = notesEl.value;
-  saveNotes(n);
+  n[country.id] = notesEl.value;
+  saveJSON(K.notes, n);
   alert("Notas salvas ✅");
 });
 document.getElementById("btnClearNotes").addEventListener("click", ()=>{
-  if(!confirm("Limpar notas desta aba?")) return;
+  if(!confirm("Limpar notas deste país?")) return;
+  const country = getActiveCountry();
   const n = loadNotes();
-  n[activeTab] = "";
-  saveNotes(n);
+  n[country.id] = "";
+  saveJSON(K.notes, n);
   renderNotes();
 });
 
 function renderPlaces(){
-  const p = PLACES[activeTab] || [];
-  const el = document.getElementById("places");
-  el.innerHTML = p.map(x=>`• <a target="_blank" rel="noopener" href="${esc(x.u)}">${esc(x.t)}</a>`).join("<br/>");
+  const meta = getMeta();
+  const country = getActiveCountry();
+
+  // special defaults for NL/BR
+  let places = DEFAULT_PLACES.generic;
+  if(country.id==="nl") places = DEFAULT_PLACES.nl;
+  if(country.id==="br") places = DEFAULT_PLACES.br;
+
+  // add one climate hint link line (text only)
+  let hint = "";
+  if(country.climate==="tropical") hint = "• Dica: calor/chuva → repelente, protetor, capa de chuva.";
+  if(country.climate==="temperado") hint = "• Dica: vento/frio → camadas + corta-vento/chuva.";
+  if(country.climate==="frio") hint = "• Dica: frio forte → luvas/gorro + térmica.";
+  if(country.climate==="deserto") hint = "• Dica: seco/sol → protetor + hidratação.";
+
+  placesEl.innerHTML =
+    (hint ? (esc(hint).replaceAll("&amp;#8226;","•") + "<br/>") : "") +
+    places.map(x=>`• <a target="_blank" rel="noopener" href="${esc(x.u)}">${esc(x.t)}</a>`).join("<br/>");
 }
 
 /* ======================
-   Buttons: defaults + reset
+   Files
+====================== */
+filePick.addEventListener("change", async (e)=>{
+  const country = getActiveCountry();
+  const selected = Array.from(e.target.files || []);
+  if(!selected.length) return;
+
+  for(const f of selected){
+    if(f.size > 3_000_000){
+      alert(`Arquivo grande demais: ${f.name}\nTenta reduzir (imagem menor / PDF mais leve).`);
+      continue;
+    }
+    const entry = await fileToEntry(f);
+    if(!entry) continue;
+
+    const all = loadFiles();
+    all[country.id] = all[country.id] || [];
+    all[country.id].unshift(entry);
+
+    try{
+      saveJSON(K.files, all);
+    }catch(err){
+      alert("LocalStorage lotou. Apague alguns arquivos/fotos ou exporte backup e limpe.");
+      break;
+    }
+  }
+
+  filePick.value = "";
+  renderFiles();
+});
+
+document.getElementById("btnClearFiles").addEventListener("click", ()=>{
+  if(!confirm("Remover TODOS os arquivos deste país?")) return;
+  const country = getActiveCountry();
+  const all = loadFiles();
+  all[country.id] = [];
+  saveJSON(K.files, all);
+  renderFiles();
+});
+
+function renderFiles(){
+  const country = getActiveCountry();
+  const all = loadFiles();
+  const arr = all[country.id] || [];
+  filesEl.innerHTML = "";
+
+  if(!arr.length){
+    filesEl.innerHTML = `<div class="muted" style="font-size:12px;">Nenhum arquivo neste país ainda.</div>`;
+    return;
+  }
+
+  arr.forEach(entry=>{
+    const row = document.createElement("div");
+    row.className = "fileRow";
+
+    const left = document.createElement("div");
+    left.className = "fileLeft";
+
+    const thumb = document.createElement("div");
+    thumb.className = "thumb";
+
+    if(entry.kind === "image"){
+      const img = document.createElement("img");
+      img.src = entry.dataUrl;
+      thumb.appendChild(img);
+    }else{
+      thumb.textContent = "📎";
+    }
+
+    const meta = document.createElement("div");
+    meta.className = "fname";
+    const kb = Math.round((entry.size||0)/1024);
+    meta.innerHTML = `<b>${esc(entry.name)}</b><small>${esc(entry.type)} • ${kb} KB</small>`;
+
+    left.appendChild(thumb);
+    left.appendChild(meta);
+
+    const right = document.createElement("div");
+    right.className = "row";
+
+    const open = document.createElement("a");
+    open.className = "link";
+    open.href = entry.dataUrl;
+    open.target = "_blank";
+    open.rel = "noopener";
+    open.textContent = "Abrir";
+
+    const del = document.createElement("button");
+    del.className = "btn small danger";
+    del.textContent = "Excluir";
+    del.addEventListener("click", ()=>{
+      if(!confirm("Excluir este arquivo?")) return;
+      const all2 = loadFiles();
+      all2[country.id] = (all2[country.id]||[]).filter(x=>x.id !== entry.id);
+      saveJSON(K.files, all2);
+      renderFiles();
+    });
+
+    right.appendChild(open);
+    right.appendChild(del);
+
+    row.appendChild(left);
+    row.appendChild(right);
+    filesEl.appendChild(row);
+  });
+}
+
+async function fileToEntry(file){
+  const isImage = (file.type || "").startsWith("image/");
+  const dataUrl = await readAsDataURL(file);
+
+  if(isImage){
+    const compressed = await compressImageDataUrl(dataUrl, 1280, 0.82);
+    return { id: uid(), name: file.name, type: file.type||"image/jpeg", size: file.size, kind:"image", dataUrl: compressed, addedAt: nowISO() };
+  }else{
+    return { id: uid(), name: file.name, type: file.type||"application/octet-stream", size: file.size, kind:"file", dataUrl, addedAt: nowISO() };
+  }
+}
+function readAsDataURL(file){
+  return new Promise((res, rej)=>{
+    const r = new FileReader();
+    r.onload = ()=>res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+function compressImageDataUrl(dataUrl, maxW, quality){
+  return new Promise((res)=>{
+    const img = new Image();
+    img.onload = ()=>{
+      const scale = Math.min(1, maxW / img.width);
+      const w = Math.round(img.width * scale);
+      const h = Math.round(img.height * scale);
+      const c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      const ctx = c.getContext("2d");
+      ctx.drawImage(img, 0, 0, w, h);
+      res(c.toDataURL("image/jpeg", quality));
+    };
+    img.onerror = ()=>res(dataUrl);
+    img.src = dataUrl;
+  });
+}
+
+/* ======================
+   Buttons: defaults/reset
 ====================== */
 document.getElementById("btnDefault").addEventListener("click", ()=>{
-  if(!confirm("Recarregar itens padrão desta aba? Isso substitui sua lista atual.")) return;
+  const country = getActiveCountry();
+  if(!confirm("Recarregar itens padrão deste país? Isso substitui sua lista atual.")) return;
+
   const st = loadState();
-  st[activeTab] = DEFAULT[activeTab].map(([text,cat])=>({id:crypto.randomUUID(), text, cat, done:false}));
-  saveState(st);
+  const base = [...BASE_ESSENTIALS, ...(CLIMATE_PACKS[country.climate]||[])];
+  const docs = [
+    ["Documento/passaporte (conforme destino)", "Documentos"],
+    ["Passagens/itinerário (print/PDF)", "Documentos"],
+    ["Reserva/hospedagem (ou endereço)", "Documentos"]
+  ];
+  st[country.id] = [...docs, ...base].map(([text,cat])=>({id:uid(), text, cat, done:false}));
+  saveJSON(K.state, st);
   renderAll();
 });
 document.getElementById("btnUncheck").addEventListener("click", ()=>{
+  const country = getActiveCountry();
   const st = loadState();
-  const list = ensureList(st, activeTab).map(x=>({...x, done:false}));
-  st[activeTab] = list;
-  saveState(st);
+  st[country.id] = (st[country.id]||[]).map(x=>({...x, done:false}));
+  saveJSON(K.state, st);
   renderAll();
 });
 document.getElementById("btnResetTab").addEventListener("click", ()=>{
-  if(!confirm("Resetar TUDO desta aba (checklist + cartão + notas)?")) return;
-  const st = loadState(); st[activeTab]=null; saveState(st);
+  const country = getActiveCountry();
+  if(!confirm("Resetar TUDO deste país (checklist + cartão + notas + arquivos)?")) return;
 
-  const trips = loadTrip(); trips[activeTab] = {}; saveTrip(trips);
-  const notes = loadNotes(); notes[activeTab] = ""; saveNotes(notes);
+  const st = loadState(); st[country.id] = null; delete st[country.id]; saveJSON(K.state, st);
+  const tr = loadTrip(); tr[country.id] = {}; saveJSON(K.trip, tr);
+  const nt = loadNotes(); nt[country.id] = ""; saveJSON(K.notes, nt);
+  const fl = loadFiles(); fl[country.id] = []; saveJSON(K.files, fl);
 
+  ensureCountryData(country);
   renderAll();
 });
 
 /* ======================
-   Export / import backup
+   Export/import backup
 ====================== */
 document.getElementById("btnExport").addEventListener("click", ()=>{
   const data = {
-    version: 2,
-    exportedAt: new Date().toISOString(),
+    version: 4,
+    exportedAt: nowISO(),
     name: localStorage.getItem(K.name) || "",
+    meta: getMeta(),
     state: loadState(),
     trip: loadTrip(),
-    notes: loadNotes()
+    notes: loadNotes(),
+    files: loadFiles()
   };
   const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `partiu-backup-${activeTab}-${new Date().toISOString().slice(0,10)}.json`;
+  a.download = `partiu-backup-${new Date().toISOString().slice(0,10)}.json`;
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
 });
@@ -864,9 +1163,12 @@ document.getElementById("importFile").addEventListener("change", async (e)=>{
     if(!confirm("Importar vai sobrescrever seus dados atuais. Continuar?")) return;
 
     if(typeof data.name==="string"){ localStorage.setItem(K.name, data.name); nameEl.value=data.name; applyName(); }
+    if(data.meta) localStorage.setItem(K.meta, JSON.stringify(data.meta));
     if(data.state) localStorage.setItem(K.state, JSON.stringify(data.state));
     if(data.trip) localStorage.setItem(K.trip, JSON.stringify(data.trip));
     if(data.notes) localStorage.setItem(K.notes, JSON.stringify(data.notes));
+    if(data.files) localStorage.setItem(K.files, JSON.stringify(data.files));
+
     saveTS();
     alert("Backup importado ✅");
     renderAll();
@@ -884,15 +1186,14 @@ function renderSavedAt(){
   const el = document.getElementById("lastSaved");
   const raw = localStorage.getItem(K.savedAt);
   if(!raw){ el.textContent = "não salvo ainda"; return; }
-  const d = new Date(raw);
-  el.textContent = "salvo: " + d.toLocaleString();
+  el.textContent = "salvo: " + new Date(raw).toLocaleString();
 }
 
 /* ======================
-   Confetti (lightweight)
+   Confetti
 ====================== */
 const fx = document.getElementById("fx");
-const ctx = fx.getContext("2d");
+const ctxFx = fx.getContext("2d");
 let confettiOn = false;
 
 function confetti(){
@@ -913,47 +1214,62 @@ function confetti(){
   let t = 0;
   const timer = setInterval(()=>{
     t++;
-    ctx.clearRect(0,0,fx.width,fx.height);
+    ctxFx.clearRect(0,0,fx.width,fx.height);
     pieces.forEach(p=>{
-      p.y += p.vy;
-      p.x += p.vx;
-      p.a += 0.08;
-      ctx.save();
-      ctx.translate(p.x,p.y);
-      ctx.rotate(p.a);
-      ctx.fillStyle = `hsla(${Math.random()*360}, 90%, 55%, .9)`;
-      ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*1.6);
-      ctx.restore();
+      p.y += p.vy; p.x += p.vx; p.a += 0.08;
+      ctxFx.save();
+      ctxFx.translate(p.x,p.y);
+      ctxFx.rotate(p.a);
+      ctxFx.fillStyle = `hsla(${Math.random()*360}, 90%, 55%, .9)`;
+      ctxFx.fillRect(-p.r/2, -p.r/2, p.r, p.r*1.6);
+      ctxFx.restore();
     });
 
     if(t>70){
       clearInterval(timer);
-      ctx.clearRect(0,0,fx.width,fx.height);
+      ctxFx.clearRect(0,0,fx.width,fx.height);
       fx.style.display = "none";
       confettiOn = false;
     }
   }, 16);
 }
-function resizeFx(){
-  fx.width = window.innerWidth;
-  fx.height = window.innerHeight;
-}
+function resizeFx(){ fx.width = window.innerWidth; fx.height = window.innerHeight; }
 window.addEventListener("resize", resizeFx);
 
 /* ======================
    Render all
 ====================== */
-function renderAll(){
-  renderSavedAt();
-  renderPlaces();
+function renderTripCountdownAndNotes(){
   renderTrip();
   renderNotes();
+  renderPlaces();
+  renderFiles();
+}
+
+function renderNotes(){
+  const country = getActiveCountry();
+  const n = loadNotes();
+  notesEl.value = n[country.id] || "";
+}
+
+function renderAll(){
+  renderTabs();
+  const country = getActiveCountry();
+  ensureCountryData(country);
+  renderSavedAt();
   renderChecklist();
+  renderTripCountdownAndNotes();
 }
 renderAll();
-
-// keep countdown live
 setInterval(()=>renderCountdown(), 30000);
+
+/* Trip save handlers */
+document.getElementById("btnSaveTrip").addEventListener("click", ()=>{
+  saveTripFromForm();
+  alert("Cartão da viagem salvo ✅");
+});
+
+/* Notes handled earlier */
 </script>
 </body>
 </html>
