@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Partiu — Checklist de Viagem</title>
+  <style>
+    :root{
+      --bg:#f7f8fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --brand:#7c3aed;  /* roxinho elegante */
+      --brand2:#f97316; /* laranja leve */
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --shadow: 0 10px 30px rgba(17,24,39,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(124,58,237,.08), transparent 55%),
+                  radial-gradient(900px 500px at 95% 15%, rgba(249,115,22,.10), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:980px;margin:0 auto;padding:18px 14px 60px}
+    header{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(247,248,251,.65);
+      border-bottom:1px solid rgba(229,231,235,.6);
+    }
+    .top{
+      max-width:980px;margin:0 auto;padding:14px 14px;
+      display:flex;gap:12px;align-items:center;justify-content:space-between;
+    }
+    .brand{
+      display:flex;gap:10px;align-items:center;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:14px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: var(--shadow);
+    }
+    .title{
+      display:flex;flex-direction:column;line-height:1.1
+    }
+    .title b{font-size:16px}
+    .title span{font-size:12px;color:var(--muted)}
+    .person{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;
+    }
+    .person input{
+      width:min(300px, 62vw);
+      padding:10px 12px;border-radius:14px;border:1px solid var(--line);
+      background:#fff;outline:none;
+    }
+    .pill{
+      padding:9px 12px;border-radius:999px;border:1px solid var(--line);
+      background: rgba(255,255,255,.8);
+      font-size:12px;color:var(--muted);
+    }
+    .bigName{
+      margin-top:14px;
+      font-weight:900;
+      font-size: clamp(26px, 6vw, 44px);
+      letter-spacing:-.02em;
+    }
+    .sub{
+      color:var(--muted);margin-top:6px;font-size:14px
+    }
+
+    .tabs{
+      margin-top:14px;
+      display:flex;gap:10px;flex-wrap:wrap;
+    }
+    .tabBtn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.85);
+      border-radius:999px;
+      padding:10px 12px;
+      cursor:pointer;
+      display:flex;gap:8px;align-items:center;
+      transition:.15s transform, .15s background, .15s border;
+      user-select:none;
+    }
+    .tabBtn:hover{transform: translateY(-1px)}
+    .tabBtn.active{
+      background: linear-gradient(135deg, rgba(124,58,237,.14), rgba(249,115,22,.12));
+      border-color: rgba(124,58,237,.35);
+    }
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:14px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+    }
+    .card{
+      background: rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:14px;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      color:#374151;
+    }
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .btn{
+      border:none;border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(249,115,22,.95));
+      color:#fff;
+      box-shadow: 0 10px 18px rgba(124,58,237,.18);
+      transition:.15s transform;
+      font-weight:700;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn.ghost{
+      background:#fff;color:var(--text);
+      border:1px solid var(--line);
+      box-shadow:none;
+      font-weight:600;
+    }
+    .btn.danger{
+      background: rgba(239,68,68,.92);
+      box-shadow: 0 10px 18px rgba(239,68,68,.18);
+    }
+    .btn.small{padding:8px 10px;border-radius:12px;font-weight:700;font-size:12px}
+
+    .progress{
+      display:flex;gap:10px;align-items:center;justify-content:space-between;
+      margin-top:10px;
+      padding:10px 12px;border:1px solid var(--line);
+      background:#fff;border-radius:14px;
+    }
+    .bar{
+      height:10px;border-radius:999px;background:#eef2ff;overflow:hidden;flex:1;
+      border:1px solid rgba(229,231,235,.9);
+    }
+    .fill{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      border-radius:999px;
+    }
+    .pct{min-width:70px;text-align:right;color:var(--muted);font-size:12px}
+
+    .list{
+      margin-top:10px;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .item{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:10px 10px;
+      border:1px solid var(--line);
+      background:#fff;border-radius:14px;
+    }
+    .item input[type="checkbox"]{margin-top:3px;transform: scale(1.15)}
+    .item .meta{flex:1}
+    .item .meta b{display:block;font-size:14px}
+    .item .meta small{color:var(--muted)}
+    .item .actions{display:flex;gap:6px;align-items:center}
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);
+      color:var(--muted);background: rgba(249,250,251,.9);
+      margin-top:6px;
+    }
+
+    .addBox{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap:8px;
+    }
+    @media (max-width: 520px){
+      .addBox{grid-template-columns: 1fr}
+    }
+    .addBox input, .addBox select{
+      padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;outline:none;
+    }
+
+    .tips{
+      display:flex;flex-direction:column;gap:10px;
+    }
+    .tip{
+      background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;
+    }
+    .tip b{display:block;margin-bottom:6px}
+    .tip ul{margin:8px 0 0 18px;color:#374151}
+    .tip li{margin:6px 0}
+    .muted{color:var(--muted)}
+    .footNote{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.35}
+    .hr{height:1px;background:var(--line);margin:12px 0}
+
+    /* uploader */
+    .uploader{
+      border:1px dashed rgba(124,58,237,.35);
+      background: rgba(124,58,237,.06);
+      padding:12px;border-radius:14px;
+    }
+    .files{
+      margin-top:10px;display:flex;flex-direction:column;gap:8px;
+    }
+    .fileRow{
+      display:flex;gap:10px;align-items:center;justify-content:space-between;
+      padding:10px 10px;border:1px solid var(--line);background:#fff;border-radius:14px;
+    }
+    .fileRow .left{display:flex;gap:10px;align-items:center;min-width:0}
+    .thumb{
+      width:44px;height:44px;border-radius:12px;border:1px solid var(--line);
+      background:#f9fafb;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto;
+    }
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .fname{
+      min-width:0;
+    }
+    .fname b{
+      display:block;
+      max-width: 380px;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      font-size:13px;
+    }
+    .fname small{color:var(--muted)}
+    a.link{color:var(--brand);text-decoration:none;font-weight:700}
+    a.link:hover{text-decoration:underline}
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono";
+      font-size:11px;
+      padding:2px 6px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <b>Partiu — Checklist de Viagem</b>
+        <span>offline • localStorage • simples e bonito</span>
+      </div>
+    </div>
+
+    <div class="person">
+      <span class="pill">Nome:</span>
+      <input id="personName" placeholder="Digite seu nome (ex.: Ernandes)" />
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="bigName" id="bigName">Seu checklist</div>
+  <div class="sub" id="subtitle">Dois modos: <b>Holanda</b> e <b>Brasil</b>. Tudo fica salvo no seu aparelho.</div>
+
+  <div class="tabs">
+    <div class="tabBtn active" data-tab="nl">🇳🇱 Partiu Holanda</div>
+    <div class="tabBtn" data-tab="br">🇧🇷 Partiu Brasil</div>
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: Checklist -->
+    <section class="card">
+      <h3>Checklist</h3>
+
+      <div class="row">
+        <button class="btn small ghost" id="btnLoadDefault">Recarregar checklist padrão</button>
+        <button class="btn small ghost" id="btnClearChecks">Desmarcar tudo</button>
+        <button class="btn small danger" id="btnResetAll">Resetar aba atual</button>
+      </div>
+
+      <div class="progress" title="Progresso do checklist">
+        <div class="bar"><div class="fill" id="fill"></div></div>
+        <div class="pct" id="pct">0%</div>
+      </div>
+
+      <div class="addBox">
+        <input id="newText" placeholder="Adicionar item (ex.: Adaptador de tomada)" />
+        <select id="newCat">
+          <option value="Documentos">Documentos</option>
+          <option value="Financeiro">Financeiro</option>
+          <option value="Saúde">Saúde</option>
+          <option value="Roupas">Roupas</option>
+          <option value="Eletrônicos">Eletrônicos</option>
+          <option value="Bagagem">Bagagem</option>
+          <option value="Casa">Casa</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Outros">Outros</option>
+        </select>
+        <button class="btn" id="btnAdd">Adicionar</button>
+      </div>
+
+      <div class="list" id="list"></div>
+
+      <div class="hr"></div>
+
+      <div class="row">
+        <button class="btn ghost" id="btnExport">Exportar backup (JSON)</button>
+        <label class="btn ghost" for="importFile" style="cursor:pointer;">Importar backup</label>
+        <input id="importFile" type="file" accept="application/json" style="display:none;">
+      </div>
+
+      <div class="footNote">
+        Dica: este app usa <span class="kbd">localStorage</span>. Se você limpar dados do navegador, perde tudo — use “Exportar backup”.
+      </div>
+    </section>
+
+    <!-- RIGHT: Upload + Tips -->
+    <aside class="card">
+      <h3>Arquivos & Fotos (localStorage)</h3>
+
+      <div class="uploader">
+        <div class="muted" style="font-size:13px;">
+          Faça upload de <b>documentos, fotos e comprovantes</b>. Fica tudo <b>só neste aparelho</b>.
+          <br/>Sugestão: foto do passaporte, reservas, seguro, tickets.
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <input id="filePick" type="file" multiple accept="image/*,.pdf,.txt,.json,.csv,.doc,.docx,.xls,.xlsx" />
+        </div>
+        <div class="footNote">
+          Para economizar espaço: prefira imagens. PDFs grandes podem estourar o limite do navegador.
+        </div>
+      </div>
+
+      <div class="files" id="files"></div>
+
+      <div class="hr"></div>
+
+      <h3 id="tipsTitle">Guia rápido — Holanda</h3>
+      <div class="tips" id="tips"></div>
+
+      <div class="footNote" id="legalNote">
+        Este guia é prático (não substitui regras oficiais). Para entrada em país, sempre confira requisitos do governo/companhia aérea.
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* =========================
+   Storage keys + state
+========================= */
+const APP_KEY = "partiu_checklist_v1";
+const FILE_KEY = "partiu_files_v1";
+const NAME_KEY = "partiu_name_v1";
+
+const tabs = {
+  nl: { label: "Holanda", emoji: "🇳🇱" },
+  br: { label: "Brasil", emoji: "🇧🇷" }
+};
+
+let activeTab = "nl";
+
+/* =========================
+   Default checklists
+========================= */
+const defaultLists = {
+  nl: [
+    // Documentos
+    {text:"Passaporte válido (ideal: +3 meses após saída)", cat:"Documentos"},
+    {text:"Passagens / comprovante de retorno", cat:"Documentos"},
+    {text:"Reserva de hospedagem (ou carta-convite)", cat:"Documentos"},
+    {text:"Seguro-viagem (Schengen: cobertura médica alta)", cat:"Documentos"},
+    {text:"Comprovantes financeiros (cartão/limite/extrato)", cat:"Documentos"},
+    {text:"CNH (se pretende dirigir) + Permissão Internacional (se quiser garantir)", cat:"Documentos"},
+    // Financeiro
+    {text:"Cartão internacional habilitado + aviso ao banco", cat:"Financeiro"},
+    {text:"Euro em espécie (pouco) + carteira/porta-cartões", cat:"Financeiro"},
+    // Saúde
+    {text:"Remédios de uso contínuo + receita", cat:"Saúde"},
+    {text:"Kit básico: analgésico, antialérgico, curativo", cat:"Saúde"},
+    // Eletrônicos
+    {text:"Adaptador de tomada (padrão europeu tipo C/F)", cat:"Eletrônicos"},
+    {text:"Carregador + cabo extra + power bank", cat:"Eletrônicos"},
+    {text:"Chip internacional / eSIM configurado", cat:"Eletrônicos"},
+    // Roupas
+    {text:"Casaco corta-vento/chuva (Holanda venta e chove)", cat:"Roupas"},
+    {text:"Tênis confortável (muita caminhada)", cat:"Roupas"},
+    {text:"Camadas: segunda pele / moletom / jaqueta", cat:"Roupas"},
+    // Bagagem
+    {text:"Cadeado TSA + tag de identificação", cat:"Bagagem"},
+    {text:"Organizadores (sacos/packing cubes)", cat:"Bagagem"},
+    // Outros
+    {text:"Roteiro básico: Amsterdã, museus, canais, bate-voltas", cat:"Outros"},
+    {text:"Apps úteis: mapas offline + transporte público", cat:"Outros"}
+  ],
+  br: [
+    // Documentos
+    {text:"Documento com foto (RG em bom estado ou CNH)", cat:"Documentos"},
+    {text:"Passagens / comprovantes de hospedagem", cat:"Documentos"},
+    {text:"Cartão do SUS/Plano de saúde (se tiver)", cat:"Documentos"},
+    // Financeiro
+    {text:"Cartões + um pouco de dinheiro em espécie", cat:"Financeiro"},
+    // Saúde
+    {text:"Repelente + protetor solar", cat:"Saúde"},
+    {text:"Remédios de uso contínuo + receita", cat:"Saúde"},
+    // Eletrônicos
+    {text:"Carregadores + power bank", cat:"Eletrônicos"},
+    // Roupas
+    {text:"Roupas adequadas ao clima do destino (chuva/calor/frio)", cat:"Roupas"},
+    {text:"Calçado confortável", cat:"Roupas"},
+    // Bagagem
+    {text:"Cadeado + identificação na mala", cat:"Bagagem"},
+    // Casa
+    {text:"Fechar gás/água, desligar eletrônicos, lixo fora", cat:"Casa"},
+    // Outros
+    {text:"Roteiro e contatos de emergência", cat:"Outros"}
+  ]
+};
+
+const tipsContent = {
+  nl: [
+    {
+      title: "O que fazer na Holanda (ideias rápidas)",
+      items: [
+        "Amsterdã: canais, Rijksmuseum, Van Gogh Museum, Casa de Anne Frank (reserve com antecedência).",
+        "Bate-volta: Zaanse Schans (moinhos), Haarlem, Utrecht, Rotterdam.",
+        "Keukenhof (primavera) e campos de tulipas (sazonal).",
+        "Ciclismo: alugue bike com cuidado (faixas e regras são rígidas)."
+      ]
+    },
+    {
+      title: "Clima e estilo (pra não sofrer)",
+      items: [
+        "Vento + chuva são comuns: leve jaqueta impermeável/corta-vento.",
+        "Use camadas (segunda pele + moletom + jaqueta).",
+        "Tênis confortável: você vai andar muito."
+      ]
+    },
+    {
+      title: "Transporte & vida prática",
+      items: [
+        "Transporte público funciona muito bem (trens/metro/ônibus).",
+        "Cartões/contato (contactless) são super usados; leve um pouco de euro só por garantia.",
+        "Horários: algumas lojas fecham cedo fora de grandes áreas turísticas."
+      ]
+    },
+    {
+      title: "Checklist “documental” inteligente",
+      items: [
+        "Tenha cópia digital (foto) de passaporte, reservas e seguro aqui no app.",
+        "Se for cruzar fronteiras Schengen, mantenha reservas e retorno fáceis de mostrar.",
+        "Se dirigir: verifique regras/locadora e considere Permissão Internacional."
+      ]
+    }
+  ],
+  br: [
+    {
+      title: "O que fazer no Brasil (modelo adaptável)",
+      items: [
+        "Monte o roteiro por cidade/bairro e salve comprovantes aqui.",
+        "Pense no clima local (chuvas, calor, serra/frio).",
+        "Se for interior: considere sinal fraco — baixe mapas offline."
+      ]
+    },
+    {
+      title: "Segurança e praticidade",
+      items: [
+        "Leve só o essencial na rua; use doleira/porta-cartões se achar melhor.",
+        "Tenha contatos de emergência e endereço da hospedagem anotados.",
+        "Repelente/protetor solar ajudam muito dependendo do destino."
+      ]
+    }
+  ]
+};
+
+/* =========================
+   Helpers
+========================= */
+function loadState(){
+  const raw = localStorage.getItem(APP_KEY);
+  return raw ? JSON.parse(raw) : { nl: null, br: null };
+}
+function saveState(state){
+  localStorage.setItem(APP_KEY, JSON.stringify(state));
+}
+function getTabList(state, tab){
+  if(!state[tab]) state[tab] = defaultLists[tab].map(x => ({...x, done:false, id: crypto.randomUUID()}));
+  return state[tab];
+}
+function setTabList(state, tab, list){
+  state[tab] = list;
+  saveState(state);
+}
+function byCatOrder(a,b){
+  const order = ["Documentos","Financeiro","Saúde","Eletrônicos","Roupas","Bagagem","Casa","Trabalho","Outros"];
+  return (order.indexOf(a.cat) - order.indexOf(b.cat)) || a.text.localeCompare(b.text);
+}
+
+/* =========================
+   UI render
+========================= */
+const listEl = document.getElementById("list");
+const fillEl = document.getElementById("fill");
+const pctEl  = document.getElementById("pct");
+const tipsEl = document.getElementById("tips");
+const tipsTitleEl = document.getElementById("tipsTitle");
+
+function render(){
+  const state = loadState();
+  const list = getTabList(state, activeTab).slice().sort(byCatOrder);
+
+  // checklist
+  listEl.innerHTML = "";
+  list.forEach(item => {
+    const el = document.createElement("div");
+    el.className = "item";
+
+    el.innerHTML = `
+      <input type="checkbox" ${item.done ? "checked":""} aria-label="Concluir item" />
+      <div class="meta">
+        <b>${escapeHtml(item.text)}</b>
+        <div class="tag">${escapeHtml(item.cat)}</div>
+      </div>
+      <div class="actions">
+        <button class="btn small ghost" title="Editar">✏️</button>
+        <button class="btn small danger" title="Excluir">🗑️</button>
+      </div>
+    `;
+    const cb = el.querySelector("input[type=checkbox]");
+    const btnEdit = el.querySelectorAll("button")[0];
+    const btnDel  = el.querySelectorAll("button")[1];
+
+    cb.addEventListener("change", () => {
+      const st = loadState();
+      const arr = getTabList(st, activeTab);
+      const idx = arr.findIndex(x => x.id === item.id);
+      if(idx >= 0){ arr[idx].done = cb.checked; setTabList(st, activeTab, arr); }
+      render();
+    });
+
+    btnEdit.addEventListener("click", () => {
+      const newText = prompt("Editar item:", item.text);
+      if(newText === null) return;
+      const newCat = prompt("Editar categoria (ex.: Documentos, Roupas...):", item.cat) || item.cat;
+
+      const st = loadState();
+      const arr = getTabList(st, activeTab);
+      const idx = arr.findIndex(x => x.id === item.id);
+      if(idx >= 0){
+        arr[idx].text = newText.trim() || arr[idx].text;
+        arr[idx].cat = newCat.trim() || arr[idx].cat;
+        setTabList(st, activeTab, arr);
+      }
+      render();
+    });
+
+    btnDel.addEventListener("click", () => {
+      if(!confirm("Excluir este item?")) return;
+      const st = loadState();
+      const arr = getTabList(st, activeTab).filter(x => x.id !== item.id);
+      setTabList(st, activeTab, arr);
+      render();
+    });
+
+    listEl.appendChild(el);
+  });
+
+  // progress
+  const total = list.length || 1;
+  const done = list.filter(x => x.done).length;
+  const pct = Math.round((done/total)*100);
+  fillEl.style.width = pct + "%";
+  pctEl.textContent = `${pct}% (${done}/${list.length})`;
+
+  // tips
+  tipsTitleEl.textContent = `Guia rápido — ${tabs[activeTab].label}`;
+  tipsEl.innerHTML = "";
+  (tipsContent[activeTab] || []).forEach(block => {
+    const t = document.createElement("div");
+    t.className = "tip";
+    t.innerHTML = `<b>${escapeHtml(block.title)}</b><ul>${block.items.map(li => `<li>${escapeHtml(li)}</li>`).join("")}</ul>`;
+    tipsEl.appendChild(t);
+  });
+
+  // files
+  renderFiles();
+}
+
+function escapeHtml(str){
+  return (str||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
+}
+
+/* =========================
+   Tabs
+========================= */
+document.querySelectorAll(".tabBtn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tabBtn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeTab = btn.dataset.tab;
+    render();
+  });
+});
+
+/* =========================
+   Name
+========================= */
+const nameInput = document.getElementById("personName");
+const bigNameEl = document.getElementById("bigName");
+
+function applyName(){
+  const name = (nameInput.value || "").trim();
+  localStorage.setItem(NAME_KEY, name);
+  bigNameEl.textContent = name ? `${name} — seu checklist` : "Seu checklist";
+}
+nameInput.value = localStorage.getItem(NAME_KEY) || "";
+nameInput.addEventListener("input", applyName);
+applyName();
+
+/* =========================
+   Checklist actions
+========================= */
+document.getElementById("btnAdd").addEventListener("click", () => {
+  const txt = document.getElementById("newText").value.trim();
+  const cat = document.getElementById("newCat").value;
+  if(!txt) return;
+
+  const st = loadState();
+  const arr = getTabList(st, activeTab);
+  arr.push({ id: crypto.randomUUID(), text: txt, cat, done:false });
+  setTabList(st, activeTab, arr);
+
+  document.getElementById("newText").value = "";
+  render();
+});
+
+document.getElementById("btnClearChecks").addEventListener("click", () => {
+  const st = loadState();
+  const arr = getTabList(st, activeTab).map(x => ({...x, done:false}));
+  setTabList(st, activeTab, arr);
+  render();
+});
+
+document.getElementById("btnLoadDefault").addEventListener("click", () => {
+  if(!confirm("Isso vai substituir a checklist atual desta aba pelo padrão. Continuar?")) return;
+  const st = loadState();
+  st[activeTab] = defaultLists[activeTab].map(x => ({...x, done:false, id: crypto.randomUUID()}));
+  saveState(st);
+  render();
+});
+
+document.getElementById("btnResetAll").addEventListener("click", () => {
+  if(!confirm("Resetar ESTA aba (checklist + arquivos dela)?")) return;
+  const st = loadState();
+  st[activeTab] = null;
+  saveState(st);
+
+  // também limpa arquivos da aba
+  const files = loadFiles();
+  files[activeTab] = [];
+  saveFiles(files);
+
+  render();
+});
+
+/* =========================
+   Export / Import backup
+========================= */
+document.getElementById("btnExport").addEventListener("click", () => {
+  const data = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    name: localStorage.getItem(NAME_KEY) || "",
+    checklist: loadState(),
+    files: loadFiles()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `partiu-backup-${activeTab}-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("importFile").addEventListener("change", async (e) => {
+  const file = e.target.files?.[0];
+  if(!file) return;
+  try{
+    const txt = await file.text();
+    const data = JSON.parse(txt);
+
+    if(!data || typeof data !== "object") throw new Error("Arquivo inválido");
+    if(!confirm("Importar backup vai sobrescrever seus dados atuais do app. Continuar?")) return;
+
+    if(typeof data.name === "string"){
+      localStorage.setItem(NAME_KEY, data.name);
+      nameInput.value = data.name;
+      applyName();
+    }
+    if(data.checklist) localStorage.setItem(APP_KEY, JSON.stringify(data.checklist));
+    if(data.files) localStorage.setItem(FILE_KEY, JSON.stringify(data.files));
+
+    alert("Backup importado com sucesso!");
+    render();
+  }catch(err){
+    alert("Não consegui importar. Verifique se é um JSON válido do app.");
+  }finally{
+    e.target.value = "";
+  }
+});
+
+/* =========================
+   Files (localStorage)
+========================= */
+function loadFiles(){
+  const raw = localStorage.getItem(FILE_KEY);
+  if(!raw) return { nl: [], br: [] };
+  try { return JSON.parse(raw); } catch { return { nl: [], br: [] }; }
+}
+function saveFiles(obj){
+  localStorage.setItem(FILE_KEY, JSON.stringify(obj));
+}
+
+const filePick = document.getElementById("filePick");
+const filesEl = document.getElementById("files");
+
+filePick.addEventListener("change", async (e) => {
+  const list = Array.from(e.target.files || []);
+  if(!list.length) return;
+
+  for(const f of list){
+    // limite bruto de 2.5MB por arquivo para não estourar storage fácil
+    if(f.size > 2_500_000){
+      alert(`Arquivo muito grande: ${f.name}\nDica: use imagem menor ou exporte em PDF mais leve.`);
+      continue;
+    }
+    const entry = await fileToEntry(f);
+    if(!entry) continue;
+
+    const all = loadFiles();
+    all[activeTab] = all[activeTab] || [];
+    all[activeTab].unshift(entry);
+
+    try{
+      saveFiles(all);
+    }catch(err){
+      alert("LocalStorage lotou. Apague alguns arquivos/fotos (ou exporte backup e limpe).");
+      break;
+    }
+  }
+
+  filePick.value = "";
+  renderFiles();
+});
+
+async function fileToEntry(file){
+  const isImage = file.type.startsWith("image/");
+  if(isImage){
+    // comprimir imagem para economizar
+    const dataUrl = await readAsDataURL(file);
+    const compressed = await compressImageDataUrl(dataUrl, 1280, 0.82);
+    return {
+      id: crypto.randomUUID(),
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      kind: "image",
+      dataUrl: compressed,
+      addedAt: new Date().toISOString()
+    };
+  }else{
+    // não imagem: salvar como base64 também (pode lotar rápido)
+    const dataUrl = await readAsDataURL(file);
+    return {
+      id: crypto.randomUUID(),
+      name: file.name,
+      type: file.type || "application/octet-stream",
+      size: file.size,
+      kind: "file",
+      dataUrl,
+      addedAt: new Date().toISOString()
+    };
+  }
+}
+
+function readAsDataURL(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+function compressImageDataUrl(dataUrl, maxW, quality){
+  return new Promise((res) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxW / img.width);
+      const w = Math.round(img.width * scale);
+      const h = Math.round(img.height * scale);
+
+      const c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      const ctx = c.getContext("2d");
+      ctx.drawImage(img, 0, 0, w, h);
+      const out = c.toDataURL("image/jpeg", quality);
+      res(out);
+    };
+    img.onerror = () => res(dataUrl);
+    img.src = dataUrl;
+  });
+}
+
+function renderFiles(){
+  const all = loadFiles();
+  const arr = (all[activeTab] || []);
+  filesEl.innerHTML = "";
+
+  if(!arr.length){
+    filesEl.innerHTML = `<div class="muted" style="font-size:13px;">Nenhum arquivo nesta aba ainda.</div>`;
+    return;
+  }
+
+  arr.forEach(entry => {
+    const row = document.createElement("div");
+    row.className = "fileRow";
+
+    const left = document.createElement("div");
+    left.className = "left";
+
+    const thumb = document.createElement("div");
+    thumb.className = "thumb";
+    if(entry.kind === "image"){
+      const im = document.createElement("img");
+      im.src = entry.dataUrl;
+      thumb.appendChild(im);
+    }else{
+      thumb.textContent = "📎";
+    }
+
+    const name = document.createElement("div");
+    name.className = "fname";
+    const sizeKb = Math.round((entry.size || 0)/1024);
+    name.innerHTML = `<b>${escapeHtml(entry.name)}</b><small>${escapeHtml(entry.type)} • ${sizeKb} KB</small>`;
+
+    left.appendChild(thumb);
+    left.appendChild(name);
+
+    const right = document.createElement("div");
+    right.className = "actions";
+
+    // view/download link
+    const a = document.createElement("a");
+    a.className = "link";
+    a.href = entry.dataUrl;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "Abrir";
+
+    const del = document.createElement("button");
+    del.className = "btn small danger";
+    del.textContent = "Excluir";
+    del.addEventListener("click", () => {
+      if(!confirm("Excluir este arquivo?")) return;
+      const files = loadFiles();
+      files[activeTab] = (files[activeTab]||[]).filter(x => x.id !== entry.id);
+      saveFiles(files);
+      renderFiles();
+    });
+
+    right.appendChild(a);
+    right.appendChild(del);
+
+    row.appendChild(left);
+    row.appendChild(right);
+
+    filesEl.appendChild(row);
+  });
+}
+
+/* =========================
+   First render
+========================= */
+render();
+</script>
+</body>
+</html>
