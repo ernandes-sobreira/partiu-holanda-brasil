@@ -154,13 +154,54 @@
       padding:18px;
     }
     .modal{
-      width:min(520px, 96vw);
+      width:min(720px, 96vw);
       background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow: var(--shadow);
       padding:14px;
     }
     .modal h4{margin:0 0 10px}
     .modal .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media (max-width:520px){ .modal .grid2{grid-template-columns:1fr} }
+
+    /* Trip sections */
+    .segWrap{display:flex;flex-direction:column;gap:10px}
+    .segTabs{display:flex;gap:8px;flex-wrap:wrap}
+    .segTab{
+      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
+      background:#fff;cursor:pointer;font-weight:800;font-size:12px;color:#111827;
+    }
+    .segTab.active{
+      border-color: rgba(124,58,237,.35);
+      background: linear-gradient(135deg, rgba(124,58,237,.10), rgba(249,115,22,.08));
+    }
+    .tripBlock{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+      padding:12px;
+    }
+    .tripBlock h4{
+      margin:0 0 10px;
+      font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:#374151;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .segGrid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    @media (max-width:740px){ .segGrid3{grid-template-columns:1fr} }
+    .segGrid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:740px){ .segGrid2{grid-template-columns:1fr} }
+
+    .segList{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .segCard{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:10px;
+      background: rgba(247,248,251,.55);
+    }
+    .segCardHead{
+      display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+    }
+    .segCardHead b{font-size:13px}
+    .segMini{font-size:12px;color:var(--muted)}
+    .segActions{display:flex;gap:8px;align-items:center}
   </style>
 </head>
 <body>
@@ -215,7 +256,6 @@
   <div class="sub" id="subline">Tudo salva neste aparelho. Crie países e adapte por clima.</div>
 
   <div class="tabs" id="tabs">
-    <!-- tabs injected -->
     <button class="btn ghost" id="btnAddCountry">+ Novo país</button>
   </div>
 
@@ -267,66 +307,111 @@
     <aside class="card">
       <h3>Cartão da Viagem <span class="badge" id="tabLabel">—</span></h3>
 
-      <div class="row">
-        <input id="tripDate" type="datetime-local" />
-      </div>
-
-      <div class="row" style="margin-top:8px">
-        <input id="from" type="text" placeholder="Saída (aeroporto/cidade) — ex: GRU" style="flex:1" />
-        <input id="to" type="text" placeholder="Chegada (aeroporto/cidade) — ex: AMS" style="flex:1" />
-      </div>
-
-      <div class="row" style="margin-top:8px">
-        <input id="flight" type="text" placeholder="Voo — ex: KL792" style="flex:1" />
-        <input id="gate" type="text" placeholder="Portão — ex: B12" style="flex:1" />
-      </div>
-
-      <div class="row" style="margin-top:8px">
-        <input id="connectCity" type="text" placeholder="Conexão (se tiver) — ex: Lisboa" style="flex:1" />
-        <input id="connectGate" type="text" placeholder="Portão da conexão — ex: C3" style="flex:1" />
-      </div>
-
-      <div class="row" style="margin-top:8px">
-        <input id="baggage" type="text" placeholder="Bagagem: despacho? peso? (ex: 1x23kg + 1 mochila)" style="flex:1" />
-      </div>
-
-      <textarea id="tripNotes" placeholder="Notas rápidas: check-in, onde trocar de voo, o que fazer ao chegar, endereço do hotel, contatos, etc."></textarea>
-
-      <div class="row" style="margin-top:10px">
-        <button class="btn" id="btnSaveTrip">Salvar cartão</button>
-        <button class="btn ghost" id="btnClearTrip">Limpar</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <h3>Arquivos & Fotos (localStorage)</h3>
-      <div class="uploader">
-        <div class="muted" style="font-size:12px;line-height:1.35">
-          Guarde: passaporte, seguro, reservas, tickets, comprovantes.
-          <br><b>Obs:</b> limite ~5–10MB. Imagens são comprimidas automaticamente.
+      <div class="segWrap">
+        <div class="segTabs">
+          <button class="segTab active" id="segTabOut">Ida</button>
+          <button class="segTab" id="segTabBack">Volta</button>
+          <span class="badge" id="tripHint">trechos ilimitados • portão/terminal/assento</span>
         </div>
+
+        <!-- OUTBOUND -->
+        <div class="tripBlock" id="blockOut">
+          <h4>
+            Ida
+            <span class="badge" id="outCount">0 trechos</span>
+          </h4>
+
+          <div class="segGrid2">
+            <div>
+              <div class="muted" style="font-size:12px;margin-bottom:6px">Data/hora (opcional)</div>
+              <input id="outDate" type="datetime-local" />
+            </div>
+            <div>
+              <div class="muted" style="font-size:12px;margin-bottom:6px">Bagagem (ida)</div>
+              <input id="outBaggage" type="text" placeholder="ex: 1x23kg + 1 mochila" />
+            </div>
+          </div>
+
+          <div style="margin-top:10px" class="row">
+            <button class="btn small ghost" id="btnAddOutSeg">+ Adicionar trecho</button>
+            <button class="btn small ghost" id="btnClearOutSegs">Limpar trechos</button>
+          </div>
+
+          <div class="segList" id="outSegs"></div>
+
+          <div style="margin-top:10px">
+            <div class="muted" style="font-size:12px;margin-bottom:6px">Notas da ida</div>
+            <textarea id="outNotes" placeholder="check-in, atenção na conexão, endereço, contatos, etc."></textarea>
+          </div>
+        </div>
+
+        <!-- RETURN -->
+        <div class="tripBlock" id="blockBack" style="display:none">
+          <h4>
+            Volta
+            <span class="badge" id="backCount">0 trechos</span>
+          </h4>
+
+          <div class="segGrid2">
+            <div>
+              <div class="muted" style="font-size:12px;margin-bottom:6px">Data/hora (opcional)</div>
+              <input id="backDate" type="datetime-local" />
+            </div>
+            <div>
+              <div class="muted" style="font-size:12px;margin-bottom:6px">Bagagem (volta)</div>
+              <input id="backBaggage" type="text" placeholder="ex: 2x23kg + mochila" />
+            </div>
+          </div>
+
+          <div style="margin-top:10px" class="row">
+            <button class="btn small ghost" id="btnAddBackSeg">+ Adicionar trecho</button>
+            <button class="btn small ghost" id="btnClearBackSegs">Limpar trechos</button>
+          </div>
+
+          <div class="segList" id="backSegs"></div>
+
+          <div style="margin-top:10px">
+            <div class="muted" style="font-size:12px;margin-bottom:6px">Notas da volta</div>
+            <textarea id="backNotes" placeholder="atenção no horário do aeroporto, devolução do carro, etc."></textarea>
+          </div>
+        </div>
+
         <div class="row" style="margin-top:10px">
-          <input id="filePick" type="file" multiple accept="image/*,.pdf,.txt,.json,.csv,.doc,.docx,.xls,.xlsx" />
-          <button class="btn small ghost" id="btnClearFiles">Limpar arquivos deste país</button>
+          <button class="btn" id="btnSaveTrip">Salvar cartão</button>
+          <button class="btn ghost" id="btnClearTrip">Limpar</button>
         </div>
-      </div>
-      <div class="files" id="files"></div>
 
-      <div class="hr"></div>
+        <div class="hr"></div>
 
-      <h3>Lugares/Links (clicáveis)</h3>
-      <div class="muted" style="font-size:12px;margin-top:-6px;margin-bottom:8px">
-        Padrão simples. Cole links do seu país nas Notas & Links também.
-      </div>
-      <div class="linkList" id="places"></div>
+        <h3>Arquivos & Fotos (localStorage)</h3>
+        <div class="uploader">
+          <div class="muted" style="font-size:12px;line-height:1.35">
+            Guarde: passaporte, seguro, reservas, tickets, comprovantes.
+            <br><b>Obs:</b> limite ~5–10MB. Imagens são comprimidas automaticamente.
+          </div>
+          <div class="row" style="margin-top:10px">
+            <input id="filePick" type="file" multiple accept="image/*,.pdf,.txt,.json,.csv,.doc,.docx,.xls,.xlsx" />
+            <button class="btn small ghost" id="btnClearFiles">Limpar arquivos deste país</button>
+          </div>
+        </div>
+        <div class="files" id="files"></div>
 
-      <div class="hr"></div>
+        <div class="hr"></div>
 
-      <h3>Notas & Links</h3>
-      <textarea id="notes" placeholder="Cole links aqui (reservas, seguro, mapas), ou escreva lembretes."></textarea>
-      <div class="row" style="margin-top:10px">
-        <button class="btn ghost" id="btnSaveNotes">Salvar notas</button>
-        <button class="btn ghost" id="btnClearNotes">Limpar notas</button>
+        <h3>Lugares/Links (clicáveis)</h3>
+        <div class="muted" style="font-size:12px;margin-top:-6px;margin-bottom:8px">
+          Padrão simples. Cole links do seu país nas Notas & Links também.
+        </div>
+        <div class="linkList" id="places"></div>
+
+        <div class="hr"></div>
+
+        <h3>Notas & Links</h3>
+        <textarea id="notes" placeholder="Cole links aqui (reservas, seguro, mapas), ou escreva lembretes."></textarea>
+        <div class="row" style="margin-top:10px">
+          <button class="btn ghost" id="btnSaveNotes">Salvar notas</button>
+          <button class="btn ghost" id="btnClearNotes">Limpar notas</button>
+        </div>
       </div>
     </aside>
   </div>
@@ -338,14 +423,13 @@
 ====================== */
 const K = {
   name: "partiu_name_v4",
-  meta: "partiu_meta_v4",        // countries list + settings
-  state: "partiu_state_v4",      // checklist per country id
-  trip: "partiu_trip_v4",        // trip per country id
-  notes: "partiu_notes_v4",      // notes per country id
-  files: "partiu_files_v4",      // files per country id
+  meta: "partiu_meta_v4",
+  state: "partiu_state_v4",
+  trip: "partiu_trip_v4",
+  notes: "partiu_notes_v4",
+  files: "partiu_files_v4",
   savedAt: "partiu_savedAt_v4",
 
-  // old keys (v3) for migration
   old: {
     name: "partiu_name_v3",
     state: "partiu_state_v3",
@@ -466,7 +550,6 @@ function ensureCountryData(country){
   const st = loadState();
   if(!st[country.id]){
     const base = [...BASE_ESSENTIALS, ...(CLIMATE_PACKS[country.climate]||[])];
-    // add doc essentials generic
     const docs = [
       ["Documento/passaporte (conforme destino)", "Documentos"],
       ["Passagens/itinerário (print/PDF)", "Documentos"],
@@ -475,9 +558,18 @@ function ensureCountryData(country){
     st[country.id] = [...docs, ...base].map(([text,cat])=>({id:uid(), text, cat, done:false}));
     saveJSON(K.state, st);
   }
-  const trip = loadTrip(); if(!trip[country.id]){ trip[country.id] = {}; saveJSON(K.trip, trip); }
-  const notes = loadNotes(); if(typeof notes[country.id] !== "string"){ notes[country.id] = ""; saveJSON(K.notes, notes); }
-  const files = loadFiles(); if(!Array.isArray(files[country.id])){ files[country.id] = []; saveJSON(K.files, files); }
+
+  // Trip object
+  const trip = loadTrip();
+  if(!trip[country.id]){
+    trip[country.id] = {};
+    saveJSON(K.trip, trip);
+  }
+
+  const notes = loadNotes();
+  if(typeof notes[country.id] !== "string"){ notes[country.id] = ""; saveJSON(K.notes, notes); }
+  const files = loadFiles();
+  if(!Array.isArray(files[country.id])){ files[country.id] = []; saveJSON(K.files, files); }
 }
 
 /* ======================
@@ -487,14 +579,11 @@ function ensureCountryData(country){
   const already = localStorage.getItem(K.meta);
   if(already) return;
 
-  // Create meta
   const meta = loadMeta();
 
-  // migrate name
   const oldName = localStorage.getItem(K.old.name);
   if(oldName && !localStorage.getItem(K.name)) localStorage.setItem(K.name, oldName);
 
-  // migrate checklist (v3 had nl/br)
   const oldState = loadJSON(K.old.state, null);
   const st = {};
   if(oldState && (oldState.nl || oldState.br)){
@@ -503,7 +592,6 @@ function ensureCountryData(country){
   }
   if(Object.keys(st).length) localStorage.setItem(K.state, JSON.stringify(st));
 
-  // migrate trip/notes/files
   const oldTrip = loadJSON(K.old.trip, null);
   if(oldTrip && (oldTrip.nl || oldTrip.br)) localStorage.setItem(K.trip, JSON.stringify({nl: oldTrip.nl||{}, br: oldTrip.br||{}}));
 
@@ -513,11 +601,9 @@ function ensureCountryData(country){
   const oldFiles = loadJSON(K.old.files, null);
   if(oldFiles && (oldFiles.nl || oldFiles.br)) localStorage.setItem(K.files, JSON.stringify({nl: oldFiles.nl||[], br: oldFiles.br||[]}));
 
-  // savedAt
   const oldSavedAt = localStorage.getItem(K.old.savedAt);
   if(oldSavedAt) localStorage.setItem(K.savedAt, oldSavedAt);
 
-  // activate NL by default
   meta.activeId = "nl";
   localStorage.setItem(K.meta, JSON.stringify(meta));
 })();
@@ -535,16 +621,6 @@ const fillEl = document.getElementById("fill");
 const pctEl = document.getElementById("pct");
 const itemsCountEl = document.getElementById("itemsCount");
 
-const tripDateEl = document.getElementById("tripDate");
-const fromEl = document.getElementById("from");
-const toEl = document.getElementById("to");
-const flightEl = document.getElementById("flight");
-const gateEl = document.getElementById("gate");
-const connectCityEl = document.getElementById("connectCity");
-const connectGateEl = document.getElementById("connectGate");
-const baggageEl = document.getElementById("baggage");
-const tripNotesEl = document.getElementById("tripNotes");
-
 const countdownBox = document.getElementById("countdownBox");
 const countdownTitle = document.getElementById("countdownTitle");
 const countdownText = document.getElementById("countdownText");
@@ -554,6 +630,24 @@ const placesEl = document.getElementById("places");
 
 const filePick = document.getElementById("filePick");
 const filesEl = document.getElementById("files");
+
+/* Trip UI (new) */
+const segTabOut = document.getElementById("segTabOut");
+const segTabBack = document.getElementById("segTabBack");
+const blockOut = document.getElementById("blockOut");
+const blockBack = document.getElementById("blockBack");
+
+const outDateEl = document.getElementById("outDate");
+const outBaggageEl = document.getElementById("outBaggage");
+const outNotesEl = document.getElementById("outNotes");
+const outSegsEl = document.getElementById("outSegs");
+const outCountEl = document.getElementById("outCount");
+
+const backDateEl = document.getElementById("backDate");
+const backBaggageEl = document.getElementById("backBaggage");
+const backNotesEl = document.getElementById("backNotes");
+const backSegsEl = document.getElementById("backSegs");
+const backCountEl = document.getElementById("backCount");
 
 /* ======================
    Active country getters
@@ -588,7 +682,6 @@ applyName();
 ====================== */
 function renderTabs(){
   const meta = getMeta();
-  // remove old injected tabs (keep add button)
   const addBtn = document.getElementById("btnAddCountry");
   tabsEl.innerHTML = "";
   meta.countries.forEach(c=>{
@@ -596,7 +689,6 @@ function renderTabs(){
     t.className = "tab" + ((meta.activeId||"nl")===c.id ? " active" : "");
     t.innerHTML = `${esc(c.name)} <span class="muted" style="font-size:12px">(${esc(c.climate)})</span>` + (c.fixed ? "" : `<span class="x" title="Remover país">×</span>`);
     t.addEventListener("click", (ev)=>{
-      // if clicked X
       if(!c.fixed && ev.target && ev.target.classList.contains("x")){
         ev.stopPropagation();
         removeCountry(c.id);
@@ -631,10 +723,8 @@ document.getElementById("btnCreateCountry").addEventListener("click", ()=>{
   if(!name){ alert("Digite o nome do país."); return; }
 
   const meta = getMeta();
-  // create id safe
   let id = name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
   if(!id) id = uid();
-  // avoid collisions
   if(meta.countries.some(c=>c.id===id)) id = id + "-" + Math.floor(Math.random()*999);
 
   const country = {id, name, climate, fixed:false};
@@ -659,7 +749,6 @@ function removeCountry(id){
   if(wasActive) meta.activeId = meta.countries[0]?.id || "nl";
   saveMeta(meta);
 
-  // delete data
   const st = loadState(); delete st[id]; saveJSON(K.state, st);
   const tr = loadTrip(); delete tr[id]; saveJSON(K.trip, tr);
   const nt = loadNotes(); delete nt[id]; saveJSON(K.notes, nt);
@@ -789,7 +878,102 @@ function renderChecklist(){
 }
 
 /* ======================
-   Trip + countdown
+   Trip model (new)
+====================== */
+/*
+trip[countryId] = {
+  outbound: { date, baggage, notes, segments:[{id, from, to, date, flightNo, terminal, gate, seat, operatedBy}] },
+  return:   { date, baggage, notes, segments:[...] }
+}
+Legacy (older v4): { tripDate, from, to, flight, gate, connectCity, connectGate, baggage, tripNotes }
+We migrate legacy into outbound on render/save.
+*/
+
+function normalizeTrip(t){
+  if(!t || typeof t !== "object") t = {};
+  // already new?
+  if(t.outbound || t.return){
+    t.outbound = t.outbound || {date:"", baggage:"", notes:"", segments:[]};
+    t.return = t.return || {date:"", baggage:"", notes:"", segments:[]};
+    t.outbound.segments = Array.isArray(t.outbound.segments) ? t.outbound.segments : [];
+    t.return.segments = Array.isArray(t.return.segments) ? t.return.segments : [];
+    return t;
+  }
+
+  // legacy -> outbound
+  const outSegs = [];
+  const main = {
+    id: uid(),
+    from: (t.from||""),
+    to: (t.to||""),
+    date: (t.tripDate||""),
+    flightNo: (t.flight||""),
+    terminal: "",
+    gate: (t.gate||""),
+    seat: "",
+    operatedBy: ""
+  };
+  if(main.from || main.to || main.flightNo || main.gate || main.date) outSegs.push(main);
+
+  // optional connection legacy
+  if((t.connectCity||"").trim()){
+    outSegs.push({
+      id: uid(),
+      from: (t.connectCity||""),
+      to: "",
+      date: "",
+      flightNo: "",
+      terminal: "",
+      gate: (t.connectGate||""),
+      seat: "",
+      operatedBy: ""
+    });
+  }
+
+  return {
+    outbound: { date: (t.tripDate||""), baggage: (t.baggage||""), notes: (t.tripNotes||""), segments: outSegs },
+    return: { date:"", baggage:"", notes:"", segments:[] }
+  };
+}
+
+function getTripForCountry(countryId){
+  const trips = loadTrip();
+  const raw = trips[countryId] || {};
+  const norm = normalizeTrip(raw);
+
+  // write-back once if legacy detected
+  const wasLegacy = !(raw && (raw.outbound || raw.return));
+  if(wasLegacy){
+    trips[countryId] = norm;
+    saveJSON(K.trip, trips);
+  }
+  return norm;
+}
+
+function setTripForCountry(countryId, tripObj){
+  const trips = loadTrip();
+  trips[countryId] = tripObj;
+  saveJSON(K.trip, trips);
+}
+
+/* ======================
+   Trip UI: tabs Ida/Volta
+====================== */
+segTabOut.addEventListener("click", ()=>{
+  segTabOut.classList.add("active");
+  segTabBack.classList.remove("active");
+  blockOut.style.display = "block";
+  blockBack.style.display = "none";
+});
+segTabBack.addEventListener("click", ()=>{
+  segTabBack.classList.add("active");
+  segTabOut.classList.remove("active");
+  blockBack.style.display = "block";
+  blockOut.style.display = "none";
+});
+
+/* ======================
+   Trip render
 ====================== */
 function renderTrip(){
   const country = getActiveCountry();
@@ -797,37 +981,248 @@ function renderTrip(){
 
   tabLabelEl.textContent = `${country.name} (${country.climate})`;
 
-  const trips = loadTrip();
-  const t = trips[country.id] || {};
+  const t = getTripForCountry(country.id);
 
-  tripDateEl.value = t.tripDate || "";
-  fromEl.value = t.from || "";
-  toEl.value = t.to || "";
-  flightEl.value = t.flight || "";
-  gateEl.value = t.gate || "";
-  connectCityEl.value = t.connectCity || "";
-  connectGateEl.value = t.connectGate || "";
-  baggageEl.value = t.baggage || "";
-  tripNotesEl.value = t.tripNotes || "";
+  // OUT
+  outDateEl.value = t.outbound.date || "";
+  outBaggageEl.value = t.outbound.baggage || "";
+  outNotesEl.value = t.outbound.notes || "";
+  renderSegments("out", t.outbound.segments || []);
+
+  // BACK
+  backDateEl.value = t.return.date || "";
+  backBaggageEl.value = t.return.baggage || "";
+  backNotesEl.value = t.return.notes || "";
+  renderSegments("back", t.return.segments || []);
 
   renderCountdown();
 }
 
+function renderSegments(which, segs){
+  const el = (which==="out") ? outSegsEl : backSegsEl;
+  const countEl = (which==="out") ? outCountEl : backCountEl;
+
+  el.innerHTML = "";
+  countEl.textContent = `${segs.length} trechos`;
+
+  if(!segs.length){
+    el.innerHTML = `<div class="muted" style="font-size:12px;">Nenhum trecho ainda. Clique em “Adicionar trecho”.</div>`;
+    return;
+  }
+
+  segs.forEach((s, idx)=>{
+    const wrap = document.createElement("div");
+    wrap.className = "segCard";
+
+    const title = `${(s.from||"—")} → ${(s.to||"—")}`;
+    const mini = [
+      s.date ? new Date(s.date).toLocaleString() : "",
+      s.flightNo ? `Voo ${s.flightNo}` : "",
+      s.terminal ? `T ${s.terminal}` : "",
+      s.gate ? `Gate ${s.gate}` : "",
+      s.seat ? `Assento ${s.seat}` : ""
+    ].filter(Boolean).join(" • ");
+
+    wrap.innerHTML = `
+      <div class="segCardHead">
+        <div>
+          <b>${esc(title)}</b>
+          <div class="segMini">${esc(mini || "Detalhes do trecho")}</div>
+        </div>
+        <div class="segActions">
+          <button class="btn small ghost" data-act="edit">✏️ Editar</button>
+          <button class="btn small danger" data-act="del">Excluir</button>
+        </div>
+      </div>
+    `;
+
+    wrap.querySelector('[data-act="del"]').addEventListener("click", ()=>{
+      if(!confirm("Excluir este trecho?")) return;
+      const country = getActiveCountry();
+      const t = getTripForCountry(country.id);
+      const list = (which==="out") ? (t.outbound.segments||[]) : (t.return.segments||[]);
+      const next = list.filter(x=>x.id!==s.id);
+      if(which==="out") t.outbound.segments = next; else t.return.segments = next;
+      setTripForCountry(country.id, t);
+      renderTrip();
+    });
+
+    wrap.querySelector('[data-act="edit"]').addEventListener("click", ()=>{
+      openSegEditor(which, s);
+    });
+
+    el.appendChild(wrap);
+  });
+}
+
+/* ======================
+   Segment editor (prompt-based, simple & fast)
+====================== */
+function openSegEditor(which, seg){
+  const f = (label, cur)=> prompt(label, cur ?? "");
+  const updated = {...seg};
+
+  const from = f("De (aeroporto/cidade):", updated.from);
+  if(from===null) return;
+  updated.from = from.trim();
+
+  const to = f("Para (aeroporto/cidade):", updated.to);
+  if(to===null) return;
+  updated.to = to.trim();
+
+  const date = f("Data/hora (YYYY-MM-DDTHH:MM) — opcional:", updated.date);
+  if(date===null) return;
+  updated.date = date.trim();
+
+  const flightNo = f("Número do voo (ex: KL792):", updated.flightNo);
+  if(flightNo===null) return;
+  updated.flightNo = flightNo.trim();
+
+  const terminal = f("Terminal (ex: 2):", updated.terminal);
+  if(terminal===null) return;
+  updated.terminal = terminal.trim();
+
+  const gate = f("Portão/Gate (ex: B12):", updated.gate);
+  if(gate===null) return;
+  updated.gate = gate.trim();
+
+  const seat = f("Assento (ex: 14A):", updated.seat);
+  if(seat===null) return;
+  updated.seat = seat.trim();
+
+  const operatedBy = f("Operado por (opcional) — ex: KLM / LATAM:", updated.operatedBy);
+  if(operatedBy===null) return;
+  updated.operatedBy = operatedBy.trim();
+
+  const country = getActiveCountry();
+  const t = getTripForCountry(country.id);
+  const list = (which==="out") ? (t.outbound.segments||[]) : (t.return.segments||[]);
+  const idx = list.findIndex(x=>x.id===seg.id);
+  if(idx>=0) list[idx] = updated;
+  if(which==="out") t.outbound.segments = list; else t.return.segments = list;
+
+  setTripForCountry(country.id, t);
+  renderTrip();
+}
+
+/* Add segment quick */
+function addSegment(which){
+  const seg = {
+    id: uid(),
+    from: "",
+    to: "",
+    date: "",
+    flightNo: "",
+    terminal: "",
+    gate: "",
+    seat: "",
+    operatedBy: ""
+  };
+  // open editor immediately
+  openSegEditor(which, seg);
+
+  // If user canceled at first prompt, editor returns without saving.
+  // So we only add after successful edit by checking existence in storage:
+  // (We handled save inside openSegEditor only for existing; for new we need special)
+}
+
+/* Better add: create, edit, then push when completed */
+function addSegmentWithPush(which){
+  const seg = {
+    id: uid(),
+    from: "",
+    to: "",
+    date: "",
+    flightNo: "",
+    terminal: "",
+    gate: "",
+    seat: "",
+    operatedBy: ""
+  };
+
+  // editor (manual) with cancel check on first prompt
+  const from = prompt("De (aeroporto/cidade):", "");
+  if(from===null) return;
+  seg.from = from.trim();
+
+  const to = prompt("Para (aeroporto/cidade):", "");
+  if(to===null) return;
+  seg.to = to.trim();
+
+  const date = prompt("Data/hora (YYYY-MM-DDTHH:MM) — opcional:", "");
+  if(date===null) return;
+  seg.date = date.trim();
+
+  const flightNo = prompt("Número do voo (ex: KL792):", "");
+  if(flightNo===null) return;
+  seg.flightNo = flightNo.trim();
+
+  const terminal = prompt("Terminal (ex: 2):", "");
+  if(terminal===null) return;
+  seg.terminal = terminal.trim();
+
+  const gate = prompt("Portão/Gate (ex: B12):", "");
+  if(gate===null) return;
+  seg.gate = gate.trim();
+
+  const seat = prompt("Assento (ex: 14A):", "");
+  if(seat===null) return;
+  seg.seat = seat.trim();
+
+  const operatedBy = prompt("Operado por (opcional) — ex: KLM / LATAM:", "");
+  if(operatedBy===null) return;
+  seg.operatedBy = operatedBy.trim();
+
+  const country = getActiveCountry();
+  const t = getTripForCountry(country.id);
+
+  if(which==="out"){
+    t.outbound.segments = Array.isArray(t.outbound.segments) ? t.outbound.segments : [];
+    t.outbound.segments.push(seg);
+  }else{
+    t.return.segments = Array.isArray(t.return.segments) ? t.return.segments : [];
+    t.return.segments.push(seg);
+  }
+
+  setTripForCountry(country.id, t);
+  renderTrip();
+}
+
+/* Buttons add/clear segments */
+document.getElementById("btnAddOutSeg").addEventListener("click", ()=> addSegmentWithPush("out"));
+document.getElementById("btnAddBackSeg").addEventListener("click", ()=> addSegmentWithPush("back"));
+
+document.getElementById("btnClearOutSegs").addEventListener("click", ()=>{
+  if(!confirm("Limpar TODOS os trechos da ida?")) return;
+  const country = getActiveCountry();
+  const t = getTripForCountry(country.id);
+  t.outbound.segments = [];
+  setTripForCountry(country.id, t);
+  renderTrip();
+});
+document.getElementById("btnClearBackSegs").addEventListener("click", ()=>{
+  if(!confirm("Limpar TODOS os trechos da volta?")) return;
+  const country = getActiveCountry();
+  const t = getTripForCountry(country.id);
+  t.return.segments = [];
+  setTripForCountry(country.id, t);
+  renderTrip();
+});
+
+/* Save trip from form */
 function saveTripFromForm(){
   const country = getActiveCountry();
-  const trips = loadTrip();
-  trips[country.id] = {
-    tripDate: tripDateEl.value || "",
-    from: fromEl.value.trim(),
-    to: toEl.value.trim(),
-    flight: flightEl.value.trim(),
-    gate: gateEl.value.trim(),
-    connectCity: connectCityEl.value.trim(),
-    connectGate: connectGateEl.value.trim(),
-    baggage: baggageEl.value.trim(),
-    tripNotes: tripNotesEl.value.trim()
-  };
-  saveJSON(K.trip, trips);
+  const t = getTripForCountry(country.id);
+
+  t.outbound.date = outDateEl.value || "";
+  t.outbound.baggage = (outBaggageEl.value||"").trim();
+  t.outbound.notes = (outNotesEl.value||"").trim();
+
+  t.return.date = backDateEl.value || "";
+  t.return.baggage = (backBaggageEl.value||"").trim();
+  t.return.notes = (backNotesEl.value||"").trim();
+
+  setTripForCountry(country.id, t);
   renderCountdown();
 }
 
@@ -835,26 +1230,42 @@ document.getElementById("btnSaveTrip").addEventListener("click", ()=>{
   saveTripFromForm();
   alert("Cartão da viagem salvo ✅");
 });
+
 document.getElementById("btnClearTrip").addEventListener("click", ()=>{
   if(!confirm("Limpar cartão da viagem deste país?")) return;
   const country = getActiveCountry();
-  const trips = loadTrip();
-  trips[country.id] = {};
-  saveJSON(K.trip, trips);
+  setTripForCountry(country.id, { outbound:{date:"",baggage:"",notes:"",segments:[]}, return:{date:"",baggage:"",notes:"",segments:[]} });
   renderTrip();
 });
 
+/* ======================
+   Countdown (uses first outbound segment date if present)
+====================== */
+function getCountdownTargetDate(countryId){
+  const t = getTripForCountry(countryId);
+
+  // Prefer first outbound segment with date
+  const seg = (t.outbound.segments||[]).find(s=> (s.date||"").trim());
+  if(seg && seg.date) return seg.date;
+
+  // Else outbound date
+  if((t.outbound.date||"").trim()) return t.outbound.date;
+
+  // Else return date (as fallback)
+  if((t.return.date||"").trim()) return t.return.date;
+
+  return "";
+}
+
 function renderCountdown(){
   const country = getActiveCountry();
-  const trips = loadTrip();
-  const t = trips[country.id] || {};
-  const val = t.tripDate || "";
+  const val = getCountdownTargetDate(country.id);
 
   countdownBox.classList.remove("ok","bad");
 
   if(!val){
     countdownTitle.textContent = "Defina a data/hora da viagem";
-    countdownText.textContent = "Preencha o Cartão da Viagem para ver a contagem regressiva e alerta.";
+    countdownText.textContent = "Preencha a Ida (ou adicione um trecho com data) para ver a contagem regressiva e alerta.";
     countdownBox.querySelector(".dot").style.background = "var(--warn)";
     return;
   }
@@ -867,6 +1278,7 @@ function renderCountdown(){
     countdownTitle.textContent = "Data inválida";
     countdownText.textContent = "Ajuste a data/hora no cartão.";
     countdownBox.classList.add("bad");
+    countdownBox.querySelector(".dot").style.background = "var(--bad)";
     return;
   }
 
@@ -887,7 +1299,7 @@ function renderCountdown(){
 
   if(totalHours <= 12){
     countdownTitle.textContent = "ALERTA: sua viagem está muito perto!";
-    countdownText.textContent = `Faltam ${hrs}h ${m}min. Confere documentos, carregadores e chegue cedo.`;
+    countdownText.textContent = `Faltam ${hrs}h ${m}min. Confere documentos, check-in e chegue cedo.`;
     countdownBox.classList.add("bad");
     countdownBox.querySelector(".dot").style.background = "var(--bad)";
   }else if(totalHours <= 36){
@@ -928,15 +1340,11 @@ document.getElementById("btnClearNotes").addEventListener("click", ()=>{
 });
 
 function renderPlaces(){
-  const meta = getMeta();
   const country = getActiveCountry();
-
-  // special defaults for NL/BR
   let places = DEFAULT_PLACES.generic;
   if(country.id==="nl") places = DEFAULT_PLACES.nl;
   if(country.id==="br") places = DEFAULT_PLACES.br;
 
-  // add one climate hint link line (text only)
   let hint = "";
   if(country.climate==="tropical") hint = "• Dica: calor/chuva → repelente, protetor, capa de chuva.";
   if(country.climate==="temperado") hint = "• Dica: vento/frio → camadas + corta-vento/chuva.";
@@ -1122,8 +1530,8 @@ document.getElementById("btnResetTab").addEventListener("click", ()=>{
   const country = getActiveCountry();
   if(!confirm("Resetar TUDO deste país (checklist + cartão + notas + arquivos)?")) return;
 
-  const st = loadState(); st[country.id] = null; delete st[country.id]; saveJSON(K.state, st);
-  const tr = loadTrip(); tr[country.id] = {}; saveJSON(K.trip, tr);
+  const st = loadState(); delete st[country.id]; saveJSON(K.state, st);
+  setTripForCountry(country.id, { outbound:{date:"",baggage:"",notes:"",segments:[]}, return:{date:"",baggage:"",notes:"",segments:[]} });
   const nt = loadNotes(); nt[country.id] = ""; saveJSON(K.notes, nt);
   const fl = loadFiles(); fl[country.id] = []; saveJSON(K.files, fl);
 
@@ -1237,7 +1645,7 @@ function resizeFx(){ fx.width = window.innerWidth; fx.height = window.innerHeigh
 window.addEventListener("resize", resizeFx);
 
 /* ======================
-   Render all
+   Places + Notes + Files wrapper
 ====================== */
 function renderTripCountdownAndNotes(){
   renderTrip();
@@ -1246,12 +1654,9 @@ function renderTripCountdownAndNotes(){
   renderFiles();
 }
 
-function renderNotes(){
-  const country = getActiveCountry();
-  const n = loadNotes();
-  notesEl.value = n[country.id] || "";
-}
-
+/* ======================
+   Render all
+====================== */
 function renderAll(){
   renderTabs();
   const country = getActiveCountry();
@@ -1262,14 +1667,6 @@ function renderAll(){
 }
 renderAll();
 setInterval(()=>renderCountdown(), 30000);
-
-/* Trip save handlers */
-document.getElementById("btnSaveTrip").addEventListener("click", ()=>{
-  saveTripFromForm();
-  alert("Cartão da viagem salvo ✅");
-});
-
-/* Notes handled earlier */
 </script>
 </body>
 </html>
